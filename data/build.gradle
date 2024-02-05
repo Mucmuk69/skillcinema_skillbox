@@ -1,0 +1,24 @@
+plugins {
+    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+
+    implementation(project(":domain"))
+    
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    //OKhttp3
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2'
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    //gson
+    implementation 'com.google.code.gson:gson:2.10'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+}

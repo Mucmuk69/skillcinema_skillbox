@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_onboarding">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.test_kinopoisk.ui.homescreen.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_movie_info"
+            app:destination="@id/navigation_movie_info" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_all_film"
+            app:destination="@id/navigation_all_film_in_collection" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_dashboard"
+            app:destination="@id/navigation_loading_collections" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_loading_collections"
+        android:name="com.example.test_kinopoisk.ui.loadingcollections.LoadingCollectionsFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_loading_collections" >
+        <action
+            android:id="@+id/action_navigation_loading_collection_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.example.test_kinopoisk.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_onboarding"
+        android:name="com.example.test_kinopoisk.ui.onboarding.OnboardingParentFragment"
+        tools:layout="@layout/fragment_parent_onboarding">
+        <action
+            android:id="@+id/action_navigation_onboarding_to_navigation_dashboard"
+            app:destination="@id/navigation_loading_collections" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_movie_info"
+        android:name="com.example.test_kinopoisk.ui.movieinfo.MovieInfoFragment"
+        tools:layout="@layout/fragment_movie_info">
+        <action
+            android:id="@+id/action_navigation_movie_info_to_navigation_staff_info"
+            app:destination="@id/navigation_staff_info" />
+        <action
+            android:id="@+id/action_navigation_movie_info_to_navigation_full_list_staff"
+            app:destination="@id/navigation_full_list_staff" />
+        <action
+            android:id="@+id/action_navigation_movie_info_to_navigation_seasons"
+            app:destination="@id/navigation_seasons" />
+        <action
+            android:id="@+id/action_navigation_movie_info_to_navigation_movie_gallery"
+            app:destination="@id/navigation_movie_gallery" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_all_film_in_collection"
+        android:name="com.example.test_kinopoisk.ui.allfilmsincollection.AllFilmsInCollectionFragment"
+        tools:layout="@layout/fragment_all_films_in_collection">
+
+        <action
+            android:id="@+id/action_navigation_all_film_to_navigation_movie_info"
+            app:destination="@id/navigation_movie_info" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_staff_info"
+        android:name="com.example.test_kinopoisk.ui.staffinfo.StaffInfoFragment"
+        tools:layout="@layout/fragment_staff_info">
+        <action
+            android:id="@+id/action_navigation_staff_info_to_navigation_movie_info"
+            app:destination="@id/navigation_movie_info" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_full_list_staff"
+        android:name="com.example.test_kinopoisk.ui.movieinfo.FullListStaffFragment"
+        tools:layout="@layout/fragment_full_list_staff">
+
+        <action
+            android:id="@+id/action_navigation_full_list_staff_to_navigation_staff_info"
+            app:destination="@id/navigation_staff_info" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_seasons"
+        android:name="com.example.test_kinopoisk.ui.serialseasons.SeasonsParentFragment"
+        tools:layout="@layout/fragment_seasons_parent">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_movie_gallery"
+        android:name="com.example.test_kinopoisk.ui.moviegallery.MovieGalleryFragment"
+        tools:layout="@layout/fragment_movie_gallery">
+
+    </fragment>
+
+</navigation>

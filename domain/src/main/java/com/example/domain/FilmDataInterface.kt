@@ -1,0 +1,49 @@
+package com.example.domain
+
+import com.example.domain.entity.data_images.MovieImages
+import com.example.domain.entity.data_model_country_and_genre.CountriesAndGenres
+import com.example.domain.entity.data_model_movie.Movie
+import com.example.domain.entity.data_model_movie_info.FilmInfo
+import com.example.domain.entity.data_serial_seasons.Seasons
+import com.example.domain.entity.data_staff.ListStaff
+import com.example.domain.entity.data_staff.StaffInfo
+
+interface FilmDataInterface {
+
+    //Премьеры фильмов
+    suspend fun getPremieres(year: Int, month: String): Movie
+
+    //Динамическая подборка по стране и жанру
+    suspend fun getFilmsSearching(
+        countries: List<Int>,
+        genres: List<Int>,
+        order: String,
+        type: String,
+        ratingFrom: Int,
+        ratingTo: Int,
+        yearFrom: Int,
+        yearTo: Int,
+        page: Int
+    ): Movie
+
+    //Список стран и жанров
+    suspend fun getCountriesAndGenres(): CountriesAndGenres
+
+    //Подборки фильмов
+    suspend fun getFilmCollections(type: String, page: Int): Movie
+
+    //Получить инфо о фильме
+    suspend fun getFilmInfo(id: Int): FilmInfo
+
+    //Получить список актеров, режиссеров и т.д.
+    suspend fun getListStaff(filmId: Int): List<ListStaff>
+
+    //Получить инфо об актерах, режиссерах и т.д.
+    suspend fun getStaffInfo(id: Int): StaffInfo
+
+    //Получить инфо о сезонах сериала
+    suspend fun getSerialSeasons(id: Int): Seasons
+
+    //Получить кадры из фильма и т.п.
+    suspend fun getMovieImages(id: Int, type: String): MovieImages
+}
