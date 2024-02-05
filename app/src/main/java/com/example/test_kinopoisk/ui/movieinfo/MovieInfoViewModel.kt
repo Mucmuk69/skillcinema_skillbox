@@ -4,14 +4,16 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.FilmDataInterfaceImpl
-import com.example.domain.entity.data_images.MovieImages
+import com.example.domain.entity.data_model_images.MovieImages
 import com.example.domain.entity.data_model_movie_info.FilmInfo
-import com.example.domain.entity.data_serial_seasons.Seasons
-import com.example.domain.entity.data_staff.ListStaff
+import com.example.domain.entity.data_model_serial_seasons.Seasons
+import com.example.domain.entity.data_model_similar_movies.SimilarMovies
+import com.example.domain.entity.data_model_staff.ListStaff
 import com.example.domain.usecase.FilmInfoUseCase
 import com.example.domain.usecase.ListStaffUseCase
 import com.example.domain.usecase.MovieImagesUseCase
 import com.example.domain.usecase.SerialSeasonsUseCase
+import com.example.domain.usecase.SimilarMoviesUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,6 +32,8 @@ class MovieInfoViewModel private constructor() : ViewModel() {
     val listActors = _listActors.asStateFlow()
     private var _serialSeasons = MutableStateFlow<List<Seasons?>>(emptyList())
     val serialSeasons = _serialSeasons.asStateFlow()
+    private var _listSimilarMovies = MutableStateFlow<List<SimilarMovies>>(emptyList())
+    val listSimilarMovies = _listSimilarMovies.asStateFlow()
 
     private var _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
@@ -39,11 +43,14 @@ class MovieInfoViewModel private constructor() : ViewModel() {
     val isLoadingStaff = _isLoadingStaff.asStateFlow()
     private var _isLoadingImages = MutableStateFlow(false)
     val isLoadingImages = _isLoadingImages.asStateFlow()
+    private var _isLoadingSimilarMovies = MutableStateFlow(false)
+    val isLoadingSimilarMovies = _isLoadingSimilarMovies.asStateFlow()
 
     private val filmInfoUseCase = FilmInfoUseCase(repository)
     private val listStaffUseCase = ListStaffUseCase(repository)
     private val serialSeasonsUseCase = SerialSeasonsUseCase(repository)
     private val movieImagesUseCase = MovieImagesUseCase(repository)
+    private val similarMoviesUseCase = SimilarMoviesUseCase(repository)
 
     //Получение инфо о фильме по id
     fun getFilmInfo(movieId: Int) {
@@ -53,10 +60,12 @@ class MovieInfoViewModel private constructor() : ViewModel() {
                     _listStaff.value = emptyList()
                     _serialSeasons.value = emptyList()
                     _movieImages.value = emptyList()
+                    _listSimilarMovies.value = emptyList()
                     _isLoadingImages.value = false
                     _isLoadingSeasons.value = false
                     _isLoadingStaff.value = false
                     _isLoading.value = false
+                    _isLoadingSimilarMovies.value = false
                     filmInfoUseCase.execute(movieId)
                 }.fold(
                     onSuccess = {
@@ -123,6 +132,24 @@ class MovieInfoViewModel private constructor() : ViewModel() {
                             .distinctBy { listStaff -> listStaff.nameRu ?: listStaff.nameEn }
                         Log.d("MyTag", "MIVM: listStaff -  $it")
                         _isLoadingStaff.value = true
+                    },
+                    onFailure = { Log.d("MyTag", "error:  ${it.message}") }
+                )
+            }
+        }
+    }
+
+    //Получение списка похожих фильмов
+    fun getSimilarMovies(filmId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (_listSimilarMovies.value.isEmpty() || listFilmInfo.value[0].kinopoiskId != filmId) {
+                runCatching {
+                    similarMoviesUseCase.execute(id = filmId)
+                }.fold(
+                    onSuccess = {
+                        _listSimilarMovies.value = listOf(it)
+                        Log.d("MyTag", "MIVM: similar movies -  $it")
+                        _isLoadingSimilarMovies.value = true
                     },
                     onFailure = { Log.d("MyTag", "error:  ${it.message}") }
                 )

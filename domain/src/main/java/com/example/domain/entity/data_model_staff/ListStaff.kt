@@ -1,4 +1,4 @@
-package com.example.domain.entity.data_staff
+package com.example.domain.entity.data_model_staff
 
 
 data class ListStaff(

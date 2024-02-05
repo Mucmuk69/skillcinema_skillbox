@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.entity.data_serial_seasons.Episode
+import com.example.domain.entity.data_model_serial_seasons.Episode
 import com.example.test_kinopoisk.databinding.SeasonsItemBinding
 
 class SeasonsAdapter : ListAdapter<Episode, SeasonsViewHolder>(DiffUtilCallback()) {

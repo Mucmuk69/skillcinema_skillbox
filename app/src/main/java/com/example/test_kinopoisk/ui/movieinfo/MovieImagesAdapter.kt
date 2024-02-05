@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.domain.entity.data_images.Item
+import com.example.domain.entity.data_model_images.Item
 import com.example.test_kinopoisk.databinding.MovieImageItemBinding
 
 class MovieImagesAdapter : ListAdapter<Item, MovieImagesViewHolder>(DiffUtilCallback()) {

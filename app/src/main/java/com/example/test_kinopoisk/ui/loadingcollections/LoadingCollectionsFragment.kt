@@ -20,7 +20,7 @@ import com.example.test_kinopoisk.ui.homescreen.HomeFragment.Companion.ARG_POPUL
 import com.example.test_kinopoisk.ui.homescreen.HomeFragment.Companion.ARG_PREMIERES_COUNT
 import com.example.test_kinopoisk.ui.homescreen.HomeFragment.Companion.ARG_SERIALS_COUNT
 import com.example.test_kinopoisk.ui.homescreen.HomeFragment.Companion.ARG_TOP250_COUNT
-import com.example.test_kinopoisk.ui.loadingcollections.MoviePagingSource.Companion.isLoadingPremieres
+import com.example.test_kinopoisk.ui.loadingcollections.MoviePagingSourceTopPopular.Companion.isLoadingTopPopular
 import com.example.test_kinopoisk.ui.movieinfo.MovieInfoFragment
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -70,10 +70,10 @@ class LoadingCollectionsFragment : Fragment() {
                 viewModel.isLoading.collect { loading ->
                     if (loading) {
                         allAdapters()
-                        isLoadingPremieres.collect { loadingPagedPremieres ->
-                            if (loadingPagedPremieres) {
-//                                isLoadingTopPopular.collect { loadingPagedPopular ->
-//                                    if (loadingPagedPopular) {
+//                        isLoadingPremieres.collect { loadingPagedPremieres ->
+//                            if (loadingPagedPremieres) {
+                                isLoadingTopPopular.collect { loadingPagedPopular ->
+                                    if (loadingPagedPopular) {
 //                                        isLoadingTop250.collect { loadingPagedTop250 ->
 //                                            if (loadingPagedTop250) {
 //                                                isLoadingDynamic.collect { loadingPagedDynamic ->
@@ -173,15 +173,15 @@ class LoadingCollectionsFragment : Fragment() {
     //Наполнение подборок
     private suspend fun allAdapters() {
 
-        //Премьеры
-        viewModel.premieresPaged.onEach {
-            premieresAdapter.submitData(it)
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
-
-//        //Популярное
-//        viewModel.topPopularAllPaged.onEach {
-//            topPopularAllAdapter.submitData(it)
+//        //Премьеры
+//        viewModel.premieresPaged.onEach {
+//            premieresAdapter.submitData(it)
 //        }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        //Популярное
+        viewModel.topPopularAllPaged.onEach {
+            topPopularAllAdapter.submitData(it)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
 //
 //        //Топ 250 фильмов
 //        viewModel.top250MoviesPaged.onEach {

@@ -1,7 +1,7 @@
 package com.example.data.entity
 
-import com.example.domain.entity.data_images.Item
-import com.example.domain.entity.data_images.MovieImages
+import com.example.domain.entity.data_model_images.Item
+import com.example.domain.entity.data_model_images.MovieImages
 
 
 data class MovieImagesData(

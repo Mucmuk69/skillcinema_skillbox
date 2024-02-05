@@ -6,6 +6,7 @@ import com.example.data.entity.ListStaffData
 import com.example.data.entity.MovieData
 import com.example.data.entity.MovieImagesData
 import com.example.data.entity.SerialSeasonsData
+import com.example.data.entity.SimilarMoviesData
 import com.example.data.entity.StaffInfoData
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -33,14 +34,14 @@ object RetrofitInstance {
 
 interface KinopoiskApi {
 
-    //премьеры фильмов
+    //Премьеры фильмов
     @Headers("X-API-KEY: $api_key")
     @GET("/api/v2.2/films/premieres")
     suspend fun premieres(
         @Query("year") year: Int, @Query("month") month: String,
     ): MovieData
 
-    //динамическая подборка по стране и жанру
+    //Динамическая подборка по стране и жанру
     @Headers("X-API-KEY: $api_key")
     @GET("/api/v2.2/films")
     suspend fun filmsSearching(
@@ -55,12 +56,12 @@ interface KinopoiskApi {
         @Query("page") page: Int
     ): MovieData
 
-    //список стран и жанров
+    //Список стран и жанров
     @Headers("X-API-KEY: $api_key")
     @GET("/api/v2.2/films/filters")
     suspend fun countriesAndGenres(): CountriesAndGenresData
 
-    //подборки фильмов
+    //Подборки фильмов
     @Headers("X-API-KEY: $api_key")
     @GET("/api/v2.2/films/collections")
     suspend fun filmCollections(
@@ -68,41 +69,48 @@ interface KinopoiskApi {
         @Query("page") page: Int,
     ): MovieData
 
-    //инфо о фильме
+    //Инфо о фильме
     @Headers("X-API-KEY: $api_key")
     @GET("/api/v2.2/films/{id}")
     suspend fun filmInfo(
         @Path("id") id: Int
     ): FilmInfoData
 
-    //инфо о сезонах сериала
+    //Инфо о сезонах сериала
     @Headers("X-API-KEY: $api_key")
     @GET("/api/v2.2/films/{id}/seasons")
     suspend fun serialSeasonsInfo(
         @Path("id") id: Int
     ): SerialSeasonsData
 
-    //список актеров, режиссеров и т.д.
+    //Список актеров, режиссеров и т.д.
     @Headers("X-API-KEY: $api_key")
     @GET("/api/v1/staff")
     suspend fun listStaff(
         @Query("filmId") filmId: Int
     ): List<ListStaffData>
 
-    //Информация об актерах, режиссерах и т.д. по id
+    //Инфо об актерах, режиссерах и т.д. по id
     @Headers("X-API-KEY: $api_key")
     @GET("/api/v1/staff/{id}")
     suspend fun staffInfo(
         @Path("id") id: Int
     ): StaffInfoData
 
-    //инфо о фильме
+    //Инфо о фильме
     @Headers("X-API-KEY: $api_key")
     @GET("/api/v2.2/films/{id}/images")
     suspend fun movieImages(
         @Path("id") id: Int,
         @Query("type") type: String
     ): MovieImagesData
+
+    //Список похожих фильмов
+    @Headers("X-API-KEY: $api_key")
+    @GET("/api/v2.2/films/{id}/similars")
+    suspend fun similarMovies(
+        @Path("id") id: Int
+    ): SimilarMoviesData
 
     private companion object {
         private const val api_key = "c305061c-5d0f-42ad-ac09-a0e0005d8710"

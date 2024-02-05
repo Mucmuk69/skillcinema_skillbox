@@ -6,15 +6,17 @@ import com.example.data.entity.ListStaffMapper
 import com.example.data.entity.MovieImagesMapper
 import com.example.data.entity.MovieMapper
 import com.example.data.entity.SeasonsMapper
+import com.example.data.entity.SimilarMoviesMapper
 import com.example.data.entity.StaffInfoMapper
 import com.example.data.retrofit.RetrofitInstance
 import com.example.domain.FilmDataInterface
 import com.example.domain.entity.data_model_country_and_genre.CountriesAndGenres
 import com.example.domain.entity.data_model_movie.Movie
 import com.example.domain.entity.data_model_movie_info.FilmInfo
-import com.example.domain.entity.data_serial_seasons.Seasons
-import com.example.domain.entity.data_staff.ListStaff
-import com.example.domain.entity.data_staff.StaffInfo
+import com.example.domain.entity.data_model_serial_seasons.Seasons
+import com.example.domain.entity.data_model_similar_movies.SimilarMovies
+import com.example.domain.entity.data_model_staff.ListStaff
+import com.example.domain.entity.data_model_staff.StaffInfo
 
 class FilmDataInterfaceImpl : FilmDataInterface {
     private val movieImagesMapper = MovieImagesMapper
@@ -24,6 +26,7 @@ class FilmDataInterfaceImpl : FilmDataInterface {
     private val seasonsMapper = SeasonsMapper
     private val staffInfoMapper = StaffInfoMapper
     private val listStaffMapper = ListStaffMapper
+    private val similarMoviesMapper = SimilarMoviesMapper
 
     //Премьеры
     override suspend fun getPremieres(year: Int, month: String): Movie =
@@ -42,17 +45,19 @@ class FilmDataInterfaceImpl : FilmDataInterface {
         yearTo: Int,
         page: Int
     ): Movie =
-        movieMapper.mapToMovie(RetrofitInstance.retrofit.filmsSearching(
-            countries = countries,
-            genres = genres,
-            order = order,
-            type = type,
-            ratingFrom = ratingFrom,
-            ratingTo = ratingTo,
-            yearFrom = yearFrom,
-            yearTo = yearTo,
-            page = page
-        ))
+        movieMapper.mapToMovie(
+            RetrofitInstance.retrofit.filmsSearching(
+                countries = countries,
+                genres = genres,
+                order = order,
+                type = type,
+                ratingFrom = ratingFrom,
+                ratingTo = ratingTo,
+                yearFrom = yearFrom,
+                yearTo = yearTo,
+                page = page
+            )
+        )
 
 
     //Список стран и жанров
@@ -92,5 +97,11 @@ class FilmDataInterfaceImpl : FilmDataInterface {
                 id = id,
                 type = type
             )
+        )
+
+    //Получить список похожих фильмов
+    override suspend fun getSimilarMovies(id: Int): SimilarMovies =
+        similarMoviesMapper.mapToSimilarMovies(
+            RetrofitInstance.retrofit.similarMovies(id = id)
         )
 }

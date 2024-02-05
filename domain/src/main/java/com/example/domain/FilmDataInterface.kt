@@ -1,12 +1,13 @@
 package com.example.domain
 
-import com.example.domain.entity.data_images.MovieImages
 import com.example.domain.entity.data_model_country_and_genre.CountriesAndGenres
+import com.example.domain.entity.data_model_images.MovieImages
 import com.example.domain.entity.data_model_movie.Movie
 import com.example.domain.entity.data_model_movie_info.FilmInfo
-import com.example.domain.entity.data_serial_seasons.Seasons
-import com.example.domain.entity.data_staff.ListStaff
-import com.example.domain.entity.data_staff.StaffInfo
+import com.example.domain.entity.data_model_serial_seasons.Seasons
+import com.example.domain.entity.data_model_similar_movies.SimilarMovies
+import com.example.domain.entity.data_model_staff.ListStaff
+import com.example.domain.entity.data_model_staff.StaffInfo
 
 interface FilmDataInterface {
 
@@ -46,4 +47,7 @@ interface FilmDataInterface {
 
     //Получить кадры из фильма и т.п.
     suspend fun getMovieImages(id: Int, type: String): MovieImages
+
+    //Получить список похожих фильмов
+    suspend fun getSimilarMovies(id: Int): SimilarMovies
 }

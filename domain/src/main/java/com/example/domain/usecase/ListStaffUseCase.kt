@@ -1,7 +1,7 @@
 package com.example.domain.usecase
 
 import com.example.domain.FilmDataInterface
-import com.example.domain.entity.data_staff.ListStaff
+import com.example.domain.entity.data_model_staff.ListStaff
 
 class ListStaffUseCase(private val filmDataInterface: FilmDataInterface) {
     suspend fun execute(filmId: Int): List<ListStaff> {

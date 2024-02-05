@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.FilmDataInterfaceImpl
 import com.example.domain.entity.data_model_movie_info.FilmInfo
-import com.example.domain.entity.data_staff.Film
-import com.example.domain.entity.data_staff.StaffInfo
+import com.example.domain.entity.data_model_staff.Film
+import com.example.domain.entity.data_model_staff.StaffInfo
 import com.example.domain.usecase.FilmInfoUseCase
 import com.example.domain.usecase.StaffInfoUseCase
 import kotlinx.coroutines.Dispatchers

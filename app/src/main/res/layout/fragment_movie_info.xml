@@ -117,8 +117,7 @@
                     android:layout_weight="1"
                     android:gravity="start"
                     android:padding="10dp"
-                    android:text="@string/the_film_was_shot"
-                    android:textSize="25sp" />
+                    android:text="@string/the_film_was_shot" />
 
                 <TextView
                     android:id="@+id/tv_count_actors"
@@ -132,8 +131,7 @@
                     android:gravity="end"
                     android:padding="10dp"
                     android:text="@string/_0"
-                    android:textColor="@color/purple_custom"
-                    android:textSize="20sp" />
+                    android:textColor="@color/purple_custom" />
 
             </LinearLayout>
 
@@ -162,8 +160,7 @@
                     android:layout_weight="1"
                     android:gravity="start"
                     android:padding="10dp"
-                    android:text="@string/staff_in_movie"
-                    android:textSize="25sp" />
+                    android:text="@string/staff_in_movie" />
 
                 <TextView
                     android:id="@+id/tv_count_staff"
@@ -177,8 +174,7 @@
                     android:gravity="end"
                     android:padding="10dp"
                     android:text="@string/_0"
-                    android:textColor="@color/purple_custom"
-                    android:textSize="20sp" />
+                    android:textColor="@color/purple_custom" />
 
             </LinearLayout>
 
@@ -206,8 +202,7 @@
                     android:layout_weight="1"
                     android:gravity="start"
                     android:padding="10dp"
-                    android:text="@string/gallery"
-                    android:textSize="25sp" />
+                    android:text="@string/gallery" />
 
                 <TextView
                     android:id="@+id/tv_count_images"
@@ -221,8 +216,7 @@
                     android:gravity="end"
                     android:padding="10dp"
                     android:text="@string/_0"
-                    android:textColor="@color/purple_custom"
-                    android:textSize="20sp" />
+                    android:textColor="@color/purple_custom" />
 
             </LinearLayout>
 
@@ -235,6 +229,50 @@
                 android:padding="5dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/movie_image_item" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_similar_movies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TitleTextAppearance25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:padding="10dp"
+                    android:text="@string/similar_movies" />
+
+                <TextView
+                    android:id="@+id/tv_similar_films"
+                    style="@style/TitleTextAppearance20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="0"
+                    android:gravity="end"
+                    android:padding="10dp"
+                    android:text="@string/_0"
+                    android:textColor="@color/purple_custom" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_similar_films"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/movie_item" />
+
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

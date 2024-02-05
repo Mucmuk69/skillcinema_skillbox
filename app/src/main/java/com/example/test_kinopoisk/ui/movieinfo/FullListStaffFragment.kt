@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.domain.entity.data_staff.ListStaff
+import com.example.domain.entity.data_model_staff.ListStaff
 import com.example.test_kinopoisk.R
 import com.example.test_kinopoisk.databinding.FragmentFullListStaffBinding
 import com.example.test_kinopoisk.ui.staffinfo.StaffInfoFragment

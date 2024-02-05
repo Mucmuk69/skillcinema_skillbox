@@ -3,7 +3,7 @@ package com.example.test_kinopoisk.ui.serialseasons
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.domain.entity.data_serial_seasons.Seasons
+import com.example.domain.entity.data_model_serial_seasons.Seasons
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class SeasonStateAdapter(

@@ -1,7 +1,6 @@
 package com.example.test_kinopoisk.ui.movieinfo
 
 import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +12,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.example.domain.entity.data_staff.ListStaff
+import com.example.domain.entity.data_model_similar_movies.Item
+import com.example.domain.entity.data_model_staff.ListStaff
 import com.example.test_kinopoisk.R
 import com.example.test_kinopoisk.databinding.FragmentMovieInfoBinding
 import com.example.test_kinopoisk.ui.auxiliaryfunctions.expandText
@@ -35,6 +35,7 @@ class MovieInfoFragment : Fragment() {
     private val listActorsAdapter = ListStaffAdapter { staffId -> onItemClick(staffId) }
     private val listStaffAdapter = ListStaffAdapter { staffId -> onItemClick(staffId) }
     private val movieImagesAdapter = MovieImagesAdapter()
+    private val similarMoviesAdapter = SimilarMoviesAdapter { movieId -> onItemClick(movieId) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,16 +51,20 @@ class MovieInfoFragment : Fragment() {
         binding.recyclerActors.adapter = listActorsAdapter
         binding.recyclerStaff.adapter = listStaffAdapter
         binding.recyclerMovieImages.adapter = movieImagesAdapter
+        binding.recyclerSimilarFilms.adapter = similarMoviesAdapter
 
         val movieId = arguments?.getInt(ARG_MOVIE_ID)
         val poster = binding.ivPoster
         val description = binding.tvDescription
-        val countActors = binding.tvCountActors
-        val countStaff = binding.tvCountStaff
+        val actorsCount = binding.tvCountActors
+        val staffCount = binding.tvCountStaff
         val allEpisodes = binding.tvAllEpisodes
         val seasons = binding.tvSeason
         val episodes = binding.tvEpisodes
-        val countImages = binding.tvCountImages
+        val imagesCount = binding.tvCountImages
+        val similarCount = binding.tvSimilarFilms
+        val llSimilarMovies = binding.llSimilarMovies
+        val recyclerSimilar = binding.recyclerSimilarFilms
 
         //Получаем id фильма, делаем запрос, получаем инфо фильма
         viewLifecycleOwner.lifecycleScope.launch {
@@ -148,7 +153,7 @@ class MovieInfoFragment : Fragment() {
                         viewModel.listActors.collect { listActors ->
                             sharedStaffVM.actors.value = listActors
                             listActorsAdapter.submitList(listActors)
-                            countActors.text = listActors.size.toString()
+                            actorsCount.text = listActors.size.toString()
                             Log.d("MyTag", "MIF: actors for adapter -  $listActors")
                         }
                     }
@@ -164,7 +169,7 @@ class MovieInfoFragment : Fragment() {
                         viewModel.listStaff.collect { listStaff ->
                             sharedStaffVM.staff.value = listStaff
                             listStaffAdapter.submitList(listStaff)
-                            countStaff.text = listStaff.size.toString()
+                            staffCount.text = listStaff.size.toString()
                             Log.d("MyTag", "MIF: staff for adapter -  $listStaff")
                         }
                     }
@@ -178,21 +183,51 @@ class MovieInfoFragment : Fragment() {
                 if (movieId != null) {
                     viewModel.getMovieImages(movieId, "SHOOTING")
                 }
-                viewModel.isLoadingImages.collect { isLoadingImages ->
-                    if (isLoadingImages) {
+                viewModel.isLoadingImages.collect { loadingImages ->
+                    if (loadingImages) {
                         viewModel.movieImages.collect {
                             movieImagesAdapter.submitList(it[0]?.items)
-                            countImages.text = it[0]?.total.toString()
+                            imagesCount.text = it[0]?.total.toString()
                             sharedImagesVM.movieImages.value = it
-//                            val a = MovieGalleryChildFragment()
-//                            bundleFunc(a, it[0])
                         }
                     }
                 }
             }
         }
 
-        countImages.setOnClickListener {
+        //Получение списка похожих фильмов и отправка их в адаптер
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                if (movieId != null) {
+                    viewModel.getSimilarMovies(movieId)
+                }
+                viewModel.isLoadingSimilarMovies.collect { loadingSimilarMovies ->
+                    if (loadingSimilarMovies) {
+                        viewModel.listSimilarMovies.collect {
+                            //Проверяем, есть ли похожие фильмы, если есть - делаем разметку видимой
+                            if (it[0].items.isNotEmpty()) {
+                                llSimilarMovies.visibility = View.VISIBLE
+                                recyclerSimilar.visibility = View.VISIBLE
+                                similarMoviesAdapter.submitList(it[0].items)
+                                similarCount.text = it[0].total.toString()
+                                if (it[0].total!! >= 20) {
+                                    similarCount.isClickable = true
+                                    similarCount.isFocusable = true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        similarCount.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_navigation_movie_info_to_navigation_full_similar_movies
+            )
+        }
+
+        imagesCount.setOnClickListener {
             findNavController().navigate(
                 R.id.action_navigation_movie_info_to_navigation_movie_gallery
             )
@@ -206,7 +241,7 @@ class MovieInfoFragment : Fragment() {
         }
 
         //Переход на экран всех актеров
-        countActors.setOnClickListener {
+        actorsCount.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("staff", "В фильме снимались")
             val destinationFragment = FullListStaffFragment()
@@ -218,7 +253,7 @@ class MovieInfoFragment : Fragment() {
         }
 
         //Переход на экран всего персонала
-        countStaff.setOnClickListener {
+        staffCount.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("staff", "Над фильмом работали")
             val destinationFragment = FullListStaffFragment()
@@ -259,9 +294,22 @@ class MovieInfoFragment : Fragment() {
             return fragment
         }
     }
-    private fun bundleFunc(fragment: Fragment, myData: Parcelable){
-        val bundle = Bundle()
-        bundle.putParcelable("myClass", myData)
-        fragment.arguments = bundle
+
+    //Клик по фильму, переход к инфо о фильме
+    private fun onItemClick(item: Item) {
+        val movieId = item.filmId!!
+        val movieInfoFragment = newInstance(movieId = movieId)
+        val currentDestination = findNavController().currentDestination
+        if (currentDestination?.id == R.id.navigation_movie_info) {
+            findNavController().navigate(
+                R.id.navigation_movie_info,
+                movieInfoFragment.arguments
+            )
+        }
     }
+//    private fun bundleFunc(fragment: Fragment, myData: Parcelable){
+//        val bundle = Bundle()
+//        bundle.putParcelable("myClass", myData)
+//        fragment.arguments = bundle
+//    }
 }

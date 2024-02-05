@@ -11,7 +11,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <item name="fontFamily">@font/protest_strike_regular</item>
+        <item name="fontFamily">@font/roboto_italic</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

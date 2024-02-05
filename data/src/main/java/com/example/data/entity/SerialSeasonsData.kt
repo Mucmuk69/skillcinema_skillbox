@@ -1,8 +1,8 @@
 package com.example.data.entity
 
-import com.example.domain.entity.data_serial_seasons.Episode
-import com.example.domain.entity.data_serial_seasons.Item
-import com.example.domain.entity.data_serial_seasons.Seasons
+import com.example.domain.entity.data_model_serial_seasons.Episode
+import com.example.domain.entity.data_model_serial_seasons.Item
+import com.example.domain.entity.data_model_serial_seasons.Seasons
 
 data class SerialSeasonsData(
     val items: List<ItemSeasonsData>,

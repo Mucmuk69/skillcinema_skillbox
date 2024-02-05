@@ -1,6 +1,6 @@
 package com.example.data.entity
 
-import com.example.domain.entity.data_staff.ListStaff
+import com.example.domain.entity.data_model_staff.ListStaff
 
 data class ListStaffData(
     var staffId: Int? = null,

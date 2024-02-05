@@ -1,8 +1,8 @@
 package com.example.data.entity
 
-import com.example.domain.entity.data_staff.Film
-import com.example.domain.entity.data_staff.Spouse
-import com.example.domain.entity.data_staff.StaffInfo
+import com.example.domain.entity.data_model_staff.Film
+import com.example.domain.entity.data_model_staff.Spouse
+import com.example.domain.entity.data_model_staff.StaffInfo
 
 data class StaffInfoData(
     val age: Int?,
