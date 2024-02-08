@@ -1,16 +1,15 @@
 package com.example.test_kinopoisk.ui.serialseasons
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.test_kinopoisk.databinding.FragmentSeasonsChildBinding
 import com.example.test_kinopoisk.ui.movieinfo.SharedSeasonsViewModel
 import kotlinx.coroutines.launch
-import com.example.test_kinopoisk.ui.auxiliaryfunctions.pluralize
 
 const val ARG_OBJECT_SEASONS = "object seasons"
 
@@ -49,6 +48,23 @@ class SeasonsChildFragment : Fragment() {
                         quantityEpisodes?.let { pluralize(it, "серия", "серии", "серий") }
                     binding.tvThisSeason.text = "$thisSeason сезон, $pluralize"
                 }
+            }
+        }
+    }
+
+    //Функция для настройки правильного окончания (сезон, сезона, сезонов)
+    private fun pluralize(count: Int, singular: String, exclusion: String, plural: String): String {
+        return when {
+            count % 10 == 1 && count % 100 != 11 -> {
+                "$count $singular"
+            }
+
+            count % 10 in 2..4 && count % 100 !in 12..14 -> {
+                "$count $exclusion"
+            }
+
+            else -> {
+                "$count $plural"
             }
         }
     }

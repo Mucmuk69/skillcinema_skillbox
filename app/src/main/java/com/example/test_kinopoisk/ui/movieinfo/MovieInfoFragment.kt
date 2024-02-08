@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -16,8 +17,7 @@ import com.example.domain.entity.data_model_similar_movies.Item
 import com.example.domain.entity.data_model_staff.ListStaff
 import com.example.test_kinopoisk.R
 import com.example.test_kinopoisk.databinding.FragmentMovieInfoBinding
-import com.example.test_kinopoisk.ui.auxiliaryfunctions.expandText
-import com.example.test_kinopoisk.ui.auxiliaryfunctions.pluralize
+import com.example.test_kinopoisk.ui.moviegallery.MovieGalleryFragment
 import com.example.test_kinopoisk.ui.staffinfo.StaffInfoFragment
 import kotlinx.coroutines.launch
 
@@ -55,6 +55,7 @@ class MovieInfoFragment : Fragment() {
         binding.recyclerSimilarFilms.adapter = similarMoviesAdapter
 
         val movieId = arguments?.getInt(ARG_MOVIE_ID)
+        Log.d("MyTag", "MIF: movie id - $movieId")
         val poster = binding.ivPoster
         val description = binding.tvDescription
         val actorsCount = binding.tvCountActors
@@ -63,6 +64,8 @@ class MovieInfoFragment : Fragment() {
         val seasons = binding.tvSeason
         val episodes = binding.tvEpisodes
         val imagesCount = binding.tvCountImages
+        val llMovieImages = binding.llMovieImages
+        val recyclerImageMovies = binding.recyclerMovieImages
         val similarCount = binding.tvSimilarFilms
         val llSimilarMovies = binding.llSimilarMovies
         val recyclerSimilar = binding.recyclerSimilarFilms
@@ -70,19 +73,18 @@ class MovieInfoFragment : Fragment() {
         //Получаем id фильма, делаем запрос, получаем инфо фильма
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                if (movieId != null) {
-                    viewModel.getFilmInfo(movieId)
-                }
+                viewModel.getFilmInfo(movieId!!)
                 //Показываем инфо фильма на экране
                 viewModel.isLoading.collect { isLoading ->
                     if (isLoading) {
-                        viewModel.listFilmInfo.collect {
+                        viewModel.listFilmInfo.collect { filmInfo ->
                             sharedSeasonsVM.nameSerial.value =
-                                it[0].nameRu ?: it[0].nameEn ?: it[0].nameOriginal ?: ""
-                            description.text = it[0].description ?: ""
+                                filmInfo[0].nameRu ?: filmInfo[0].nameEn ?: filmInfo[0].nameOriginal
+                                        ?: ""
+                            description.text = filmInfo[0].description ?: ""
                             Glide
                                 .with(poster.context)
-                                .load(it[0].posterUrl)
+                                .load(filmInfo[0].posterUrl)
                                 .into(poster)
                         }
                     }
@@ -100,9 +102,8 @@ class MovieInfoFragment : Fragment() {
                                 binding.llAllEpisodes1.visibility = View.VISIBLE
                                 binding.llAllEpisodes2.visibility = View.VISIBLE
                                 if (binding.llAllEpisodes1.visibility == View.VISIBLE) {
-                                    if (movieId != null) {
-                                        viewModel.getSerialSeasonsInfo(movieId)
-                                    }
+                                    viewModel.getSerialSeasonsInfo(movieId!!)
+                                    Log.d("MyTag", "MIF: movie id in func seasons - $movieId")
                                     viewModel.isLoadingSeasons.collect { loadingSeasons ->
                                         if (loadingSeasons) {
                                             viewModel.serialSeasons.collect { seasonsAndEpisodes ->
@@ -119,8 +120,8 @@ class MovieInfoFragment : Fragment() {
                                                 Log.d("MyTag", "MIF: seasons -  ${seasons.text}")
                                                 //Подсчет общего количества серий в сериале
                                                 val sumEpisodes =
-                                                    seasonsAndEpisodes.sumOf {
-                                                        it?.items?.sumOf { season ->
+                                                    seasonsAndEpisodes.sumOf { seasons ->
+                                                        seasons?.items?.sumOf { season ->
                                                             season.episodes.size
                                                         } ?: 1
                                                     }
@@ -146,9 +147,7 @@ class MovieInfoFragment : Fragment() {
 //Запрос списка актеров и отправка информации в адаптер
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                if (movieId != null) {
-                    viewModel.getListStaff(movieId)
-                }
+                viewModel.getListStaff(movieId!!)
                 viewModel.isLoadingStaff.collect { isLoadingStaff ->
                     if (isLoadingStaff) {
                         viewModel.listActors.collect { listActors ->
@@ -181,15 +180,21 @@ class MovieInfoFragment : Fragment() {
         //Получение и отправка в адаптер кадров из фильма и т.п.
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                if (movieId != null) {
-                    viewModel.getMovieImages(movieId, "SHOOTING")
-                }
+                viewModel.getMovieImages(movieId!!, "SHOOTING")
                 viewModel.isLoadingImages.collect { loadingImages ->
                     if (loadingImages) {
-                        viewModel.movieImages.collect {
-                            movieImagesAdapter.submitList(it[0]?.items)
-                            imagesCount.text = it[0]?.total.toString()
-                            sharedImagesVM.movieImages.value = it
+                        viewModel.movieImages.collect { movieImages ->
+                            //Если есть кадры, то делаем видимыми элементы разметки
+                            if (movieImages[0]?.items?.isNotEmpty() == true) {
+                                visibilityLayout(llMovieImages, recyclerImageMovies)
+                                movieImagesAdapter.submitList(movieImages[0]?.items)
+                                sharedImagesVM.movieImages.value = movieImages
+                                imagesCount.text = movieImages[0]?.total.toString()
+                                //Если total не 0, то делаем его кликабельным для перехода на другой фрагмент
+                                if (movieImages[0]?.total != null || movieImages[0]?.total!! > 0) {
+                                    isClickableAndVisibleTotalCount(imagesCount)
+                                }
+                            }
                         }
                     }
                 }
@@ -199,23 +204,18 @@ class MovieInfoFragment : Fragment() {
         //Получение списка похожих фильмов и отправка их в адаптер
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                if (movieId != null) {
-                    viewModel.getSimilarMovies(movieId)
-                }
+                viewModel.getSimilarMovies(movieId!!)
                 viewModel.isLoadingSimilarMovies.collect { loadingSimilarMovies ->
                     if (loadingSimilarMovies) {
-                        viewModel.listSimilarMovies.collect { similarMovies->
+                        viewModel.listSimilarMovies.collect { similarMovies ->
                             //Проверяем, есть ли похожие фильмы, если есть - делаем разметку видимой
                             if (similarMovies[0].items.isNotEmpty()) {
-                                llSimilarMovies.visibility = View.VISIBLE
-                                recyclerSimilar.visibility = View.VISIBLE
+                                visibilityLayout(llSimilarMovies, recyclerSimilar)
                                 similarMoviesAdapter.submitList(similarMovies[0].items)
                                 sharedSimilarVM.similarAdapter.value = similarMovies
                                 similarCount.text = similarMovies[0].total.toString()
                                 if (similarMovies[0].total!! >= 20) {
-                                    similarCount.visibility = View.VISIBLE
-                                    similarCount.isClickable = true
-                                    similarCount.isFocusable = true
+                                    isClickableAndVisibleTotalCount(similarCount)
                                 }
                             }
                         }
@@ -224,15 +224,22 @@ class MovieInfoFragment : Fragment() {
             }
         }
 
+        //Переход на экран всех похожих фильмов
         similarCount.setOnClickListener {
             findNavController().navigate(
                 R.id.action_navigation_movie_info_to_navigation_full_similar_movies
             )
         }
 
+        //Переход на экран всех кадров т.п.
         imagesCount.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putInt(ARG_MOVIE_ID, movieId!!)
+            val movieGalleryFragment = MovieGalleryFragment()
+            movieGalleryFragment.arguments = bundle
             findNavController().navigate(
-                R.id.action_navigation_movie_info_to_navigation_movie_gallery
+                R.id.action_navigation_movie_info_to_navigation_movie_gallery,
+                bundle
             )
         }
 
@@ -247,8 +254,8 @@ class MovieInfoFragment : Fragment() {
         actorsCount.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("staff", "В фильме снимались")
-            val destinationFragment = FullListStaffFragment()
-            destinationFragment.arguments = bundle
+            val fullListStaffFragment = FullListStaffFragment()
+            fullListStaffFragment.arguments = bundle
             findNavController().navigate(
                 R.id.action_navigation_movie_info_to_navigation_full_list_staff,
                 bundle
@@ -259,8 +266,8 @@ class MovieInfoFragment : Fragment() {
         staffCount.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("staff", "Над фильмом работали")
-            val destinationFragment = FullListStaffFragment()
-            destinationFragment.arguments = bundle
+            val fullListStaffFragment = FullListStaffFragment()
+            fullListStaffFragment.arguments = bundle
             findNavController().navigate(
                 R.id.action_navigation_movie_info_to_navigation_full_list_staff,
                 bundle
@@ -286,9 +293,20 @@ class MovieInfoFragment : Fragment() {
         }
     }
 
+    private fun isClickableAndVisibleTotalCount(view: View) {
+        view.visibility = View.VISIBLE
+        view.isClickable = true
+        view.isFocusable = true
+    }
+
+    private fun visibilityLayout(view1: View, view2: View) {
+        view1.visibility = View.VISIBLE
+        view2.visibility = View.VISIBLE
+    }
+
     //Функция для передачи и получении id фильма
     companion object {
-        private const val ARG_MOVIE_ID = "movieId"
+         const val ARG_MOVIE_ID = "movieId"
         fun newInstance(movieId: Int): MovieInfoFragment {
             val fragment = MovieInfoFragment()
             val args = Bundle()
@@ -309,6 +327,29 @@ class MovieInfoFragment : Fragment() {
                 movieInfoFragment.arguments
             )
         }
+    }
+
+    //Функция для настройки правильного окончания (сезон, сезона, сезонов)
+    private fun pluralize(count: Int, singular: String, exclusion: String, plural: String): String {
+        return when {
+            count % 10 == 1 && count % 100 != 11 -> {
+                "$count $singular"
+            }
+
+            count % 10 in 2..4 && count % 100 !in 12..14 -> {
+                "$count $exclusion"
+            }
+
+            else -> {
+                "$count $plural"
+            }
+        }
+    }
+
+    //Функция для скрытия текста описания фильма
+    private fun expandText(textView: TextView) {
+        textView.maxLines = Integer.MAX_VALUE
+        textView.ellipsize = null
     }
 //    private fun bundleFunc(fragment: Fragment, myData: Parcelable){
 //        val bundle = Bundle()

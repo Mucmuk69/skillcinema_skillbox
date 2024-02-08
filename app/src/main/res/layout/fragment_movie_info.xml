@@ -190,8 +190,10 @@
                 tools:listitem="@layout/staff_item" />
 
             <LinearLayout
+                android:id="@+id/ll_movie_images"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
@@ -211,8 +213,6 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="0"
-                    android:clickable="true"
-                    android:focusable="true"
                     android:gravity="end"
                     android:padding="10dp"
                     android:text="@string/_0"
@@ -224,6 +224,7 @@
                 android:id="@+id/recycler_movie_images"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_margin="5dp"
                 android:orientation="horizontal"
                 android:padding="5dp"

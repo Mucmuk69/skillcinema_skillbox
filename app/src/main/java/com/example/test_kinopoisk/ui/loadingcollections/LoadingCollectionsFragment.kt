@@ -13,8 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.domain.entity.data_model_movie.Items
 import com.example.test_kinopoisk.R
 import com.example.test_kinopoisk.databinding.FragmentLoadingCollectionsBinding
-import com.example.test_kinopoisk.ui.auxiliaryfunctions.swipeLayoutParams
-import com.example.test_kinopoisk.ui.auxiliaryfunctions.visibilityElementXML
 import com.example.test_kinopoisk.ui.homescreen.HomeFragment.Companion.ARG_DYNAMIC_COUNT
 import com.example.test_kinopoisk.ui.homescreen.HomeFragment.Companion.ARG_POPULAR_COUNT
 import com.example.test_kinopoisk.ui.homescreen.HomeFragment.Companion.ARG_PREMIERES_COUNT
@@ -167,6 +165,30 @@ class LoadingCollectionsFragment : Fragment() {
                 movieInfoFragment.arguments
             )
         }
+    }
+
+    //Функция для замены параметров заполнения ширины и высоты layout
+    private fun swipeLayoutParams(element: View) {
+        val layoutParams = element.layoutParams
+        if (layoutParams.height == ViewGroup.LayoutParams.WRAP_CONTENT) {
+            layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+        }else{
+            layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        }
+        element.layoutParams = layoutParams
+    }
+
+    //Функция для скрытия и наоборот некоторых элементов разметки
+    private fun visibilityElementXML(
+        element1: View,
+        element2: View,
+        element3: View,
+        element4: View,
+    ) {
+        element1.visibility = View.VISIBLE
+        element2.visibility = View.VISIBLE
+        element3.visibility = View.GONE
+        element4.visibility = View.GONE
     }
 
 

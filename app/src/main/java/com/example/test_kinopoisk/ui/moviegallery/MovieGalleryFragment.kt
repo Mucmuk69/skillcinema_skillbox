@@ -1,12 +1,14 @@
 package com.example.test_kinopoisk.ui.moviegallery
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.test_kinopoisk.databinding.FragmentMovieGalleryBinding
+import com.example.test_kinopoisk.ui.movieinfo.MovieInfoFragment.Companion.ARG_MOVIE_ID
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -37,7 +39,11 @@ class MovieGalleryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = MovieGalleryTabAdapter(this)
+        val movieId = arguments?.getInt(ARG_MOVIE_ID)
+        Log.d("MyTag", "MGF: movie id - $movieId")
+
+
+        adapter = MovieGalleryTabAdapter(this, movieId!!)
         viewPager = binding.pager
         viewPager.adapter = adapter
 
@@ -45,7 +51,5 @@ class MovieGalleryFragment : Fragment() {
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabNames[position]
         }.attach()
-
     }
-
 }
