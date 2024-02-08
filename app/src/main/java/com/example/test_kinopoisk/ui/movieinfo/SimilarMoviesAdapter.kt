@@ -1,6 +1,7 @@
 package com.example.test_kinopoisk.ui.movieinfo
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -36,7 +37,8 @@ class SimilarMoviesAdapter(
         with(holder.binding) {
             title.text = item.nameRu ?: item.nameEn
                     ?: item.nameOriginal
-            genres.text = ""
+            genres.visibility = View.GONE
+            rating.visibility = View.GONE
             item?.let {
                 Glide
                     .with(poster.context)

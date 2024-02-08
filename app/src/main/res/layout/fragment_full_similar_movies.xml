@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:padding="10dp"
     tools:context=".ui.movieinfo.FullSimilarMoviesFragment">
 
     <TextView
@@ -11,8 +13,8 @@
         style="@style/TitleTextAppearance25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/test"
         android:layout_margin="10dp"
+        android:text="@string/similar_movies"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/recycler_similar" />
@@ -21,12 +23,14 @@
         android:id="@+id/recycler_similar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:orientation="vertical"
+        android:padding="5dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:spanCount="2"
         tools:listitem="@layout/movie_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

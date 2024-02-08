@@ -31,6 +31,7 @@ class MovieInfoFragment : Fragment() {
     private val sharedStaffVM: SharedStaffViewModel by activityViewModels()
     private val sharedSeasonsVM: SharedSeasonsViewModel by activityViewModels()
     private val sharedImagesVM: SharedMovieImagesViewModel by activityViewModels()
+    private val sharedSimilarVM: SharedSimilarMoviesViewModel by activityViewModels()
 
     private val listActorsAdapter = ListStaffAdapter { staffId -> onItemClick(staffId) }
     private val listStaffAdapter = ListStaffAdapter { staffId -> onItemClick(staffId) }
@@ -203,14 +204,16 @@ class MovieInfoFragment : Fragment() {
                 }
                 viewModel.isLoadingSimilarMovies.collect { loadingSimilarMovies ->
                     if (loadingSimilarMovies) {
-                        viewModel.listSimilarMovies.collect {
+                        viewModel.listSimilarMovies.collect { similarMovies->
                             //Проверяем, есть ли похожие фильмы, если есть - делаем разметку видимой
-                            if (it[0].items.isNotEmpty()) {
+                            if (similarMovies[0].items.isNotEmpty()) {
                                 llSimilarMovies.visibility = View.VISIBLE
                                 recyclerSimilar.visibility = View.VISIBLE
-                                similarMoviesAdapter.submitList(it[0].items)
-                                similarCount.text = it[0].total.toString()
-                                if (it[0].total!! >= 20) {
+                                similarMoviesAdapter.submitList(similarMovies[0].items)
+                                sharedSimilarVM.similarAdapter.value = similarMovies
+                                similarCount.text = similarMovies[0].total.toString()
+                                if (similarMovies[0].total!! >= 20) {
+                                    similarCount.visibility = View.VISIBLE
                                     similarCount.isClickable = true
                                     similarCount.isFocusable = true
                                 }

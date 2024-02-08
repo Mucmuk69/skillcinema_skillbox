@@ -174,3 +174,7 @@ class SharedSeasonsViewModel : ViewModel() {
 class SharedMovieImagesViewModel : ViewModel() {
     var movieImages = MutableStateFlow<List<MovieImages?>>(emptyList())
 }
+
+class SharedSimilarMoviesViewModel :ViewModel() {
+    var similarAdapter = MutableStateFlow<List<SimilarMovies>>(emptyList())
+}
