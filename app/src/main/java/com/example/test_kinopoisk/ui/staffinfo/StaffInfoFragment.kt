@@ -101,6 +101,19 @@ class StaffInfoFragment : Fragment() {
             }
         }
 
+        //Фильмография
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isLoadingStaffInfo.collect { loadingListFilms ->
+                    if (loadingListFilms) {
+                        viewModel.listStaffInfo.collect { staffInfo ->
+                            binding.tvCountFilms.text = staffInfo[0]?.films?.size.toString()
+                        }
+                    }
+                }
+            }
+        }
+
 
         // Обработчик клика по изображению для отображения в диалоговом окне в полноэкранном режиме
         poster.setOnClickListener {

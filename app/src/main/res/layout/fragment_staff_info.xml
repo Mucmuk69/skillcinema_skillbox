@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="@string/hello_blank_fragment"
+                android:text="@string/name"
                 app:layout_constraintStart_toEndOf="@+id/iv_poster"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,16 +47,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="@string/hello_blank_fragment"
+                android:text="@string/profession"
                 app:layout_constraintStart_toEndOf="@+id/iv_poster"
                 app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_staff_info"
-                android:layout_marginTop="70dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -66,13 +66,46 @@
 
             <TextView
                 android:id="@+id/tv_best"
+                style="@style/TitleTextAppearance25"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TitleTextAppearance25"
                 android:padding="10dp"
                 android:text="@string/best_films"
                 app:layout_constraintStart_toStartOf="@+id/recycler_staff_info"
                 app:layout_constraintTop_toTopOf="@+id/recycler_staff_info" />
+
+
+            <TextView
+                android:id="@+id/tv_filmography"
+                style="@style/TitleTextAppearance25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                android:text="@string/filmography"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_staff_info" />
+
+            <TextView
+                android:id="@+id/tv_list_filmography"
+                style="@style/TitleTextAppearance18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/in_the_list"
+                android:textColor="@color/purple_custom"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_filmography" />
+
+            <TextView
+                android:id="@+id/tv_count_films"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/filmography"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_filmography" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

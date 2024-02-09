@@ -14,26 +14,20 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class StaffInfoViewModel private constructor(
-    repository: FilmDataInterfaceImpl
-) : ViewModel() {
-    constructor() : this(FilmDataInterfaceImpl())
+class StaffInfoViewModel private constructor() : ViewModel() {
+    private val repository = FilmDataInterfaceImpl()
 
     private var _isLoadingStaffInfo = MutableStateFlow(false)
     val isLoadingStaffInfo = _isLoadingStaffInfo.asStateFlow()
-
     private var _isLoadingListBestFilms = MutableStateFlow(false)
     val isLoadingListBestFilms = _isLoadingListBestFilms.asStateFlow()
-
     private var _isLoadingBestFilms = MutableStateFlow(false)
     val isLoadingBestFilms = _isLoadingListBestFilms.asStateFlow()
 
     private var _listStaffInfo = MutableStateFlow<List<StaffInfo?>>(emptyList())
     val listStaffInfo = _listStaffInfo.asStateFlow()
-
     private var _listBestFilms = MutableStateFlow<List<FilmInfo>>(emptyList())
     val listBestFilms = _listBestFilms.asStateFlow()
-
     private var _listIdBestFilms = MutableStateFlow<List<Film>>(emptyList())
     val listIdBestFilms = _listIdBestFilms.asStateFlow()
 
@@ -93,6 +87,7 @@ class StaffInfoViewModel private constructor(
                             _listIdBestFilms.value = listFilms[0]?.films
                                 ?.filter { film -> film.rating != null && film.rating!! >= 4.toString() }
                                 ?.distinctBy { filmName -> filmName.nameRu ?: filmName.nameEn }
+                                //Должно быть 10, но на каждый фильм свой запрос в апи
                                 ?.take(1) ?: emptyList()
                             Log.d("MyTag", "SIVM: Id best films -  ${listIdBestFilms.value}")
                             _isLoadingListBestFilms.value = true

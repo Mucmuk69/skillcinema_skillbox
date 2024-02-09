@@ -38,4 +38,8 @@
     <string name="film_poster">film_poster</string>
     <string name="movie_images">movie images</string>
     <string name="similar_movies">Похожие фильмы</string>
+    <string name="name">Имя</string>
+    <string name="profession">Профессия</string>
+    <string name="filmography">Фильмография</string>
+    <string name="in_the_list">К списку</string>
 </resources>
