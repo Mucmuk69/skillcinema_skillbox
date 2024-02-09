@@ -41,8 +41,6 @@ class MovieGalleryFragment : Fragment() {
 
         val movieId = arguments?.getInt(ARG_MOVIE_ID)
         Log.d("MyTag", "MGF: movie id - $movieId")
-
-
         adapter = MovieGalleryTabAdapter(this, movieId!!)
         viewPager = binding.pager
         viewPager.adapter = adapter

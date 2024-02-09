@@ -41,9 +41,9 @@ class MovieGalleryChildFragment : Fragment() {
 
         arguments?.takeIf { it.containsKey(ARG_OBJECT_IMAGE) }?.apply {
             when (getInt(ARG_OBJECT_IMAGE)) {
+                //Кадры со съемок
                 1 -> {
                     lifecycleScope.launch {
-                        movieGalleryVM.getKinopoiskId(movieId)
                         sharedImagesVM.movieImages.collect { movieImages ->
                             if (movieImages[0]?.items?.isNotEmpty() == true) {
                                 imageAdapter.submitList(movieImages[0]?.items)
@@ -52,9 +52,10 @@ class MovieGalleryChildFragment : Fragment() {
                     }
                 }
 
+                //Кадры из фильма
                 2 -> {
                     lifecycleScope.launch {
-                        movieGalleryVM.getMovieImagesStill(movieId = movieId!!, type = STILL)
+                        movieGalleryVM.getMovieImages(movieId = movieId!!, type = STILL)
                         movieGalleryVM.isLoadingImagesStill.collect { loadingImage ->
                             if (loadingImage) {
                                 movieGalleryVM.movieImagesStill.collect { movieImages ->
@@ -67,9 +68,10 @@ class MovieGalleryChildFragment : Fragment() {
                     }
                 }
 
+                //Фан-арты
                 3 -> {
                     lifecycleScope.launch {
-                        movieGalleryVM.getMovieImagesFanArt(movieId = movieId!!, type = FAN_ART)
+                        movieGalleryVM.getMovieImages(movieId = movieId!!, type = FAN_ART)
                         movieGalleryVM.isLoadingImagesFanArt.collect { loadingImage ->
                             if (loadingImage) {
                                 movieGalleryVM.movieImagesFanArt.collect { movieImages ->
@@ -82,9 +84,10 @@ class MovieGalleryChildFragment : Fragment() {
                     }
                 }
 
+                //Концепт-арты
                 4 -> {
                     lifecycleScope.launch {
-                        movieGalleryVM.getMovieImagesConcept(movieId = movieId!!, type = CONCEPT)
+                        movieGalleryVM.getMovieImages(movieId = movieId!!, type = CONCEPT)
                         movieGalleryVM.isLoadingImagesConcept.collect { loadingImage ->
                             if (loadingImage) {
                                 movieGalleryVM.movieImagesConcept.collect { movieImages ->
