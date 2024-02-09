@@ -30,6 +30,7 @@ class StaffInfoFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: StaffInfoViewModel by activityViewModels()
+    private val sharedStaffInfoVM: SharedStaffInfoViewModel by activityViewModels()
     private val bestFilmsAdapter = BestFilmsAdapter { film -> onItemClick(film) }
 
     override fun onCreateView(
@@ -59,12 +60,12 @@ class StaffInfoFragment : Fragment() {
                 }
                 viewModel.isLoadingStaffInfo.collect { isLoading ->
                     if (isLoading) {
-                        viewModel.listStaffInfo.collect {
-                            nameActor.text = it[0]?.nameRu ?: ""
-                            profession.text = it[0]?.profession
+                        viewModel.listStaffInfo.collect { staffInfo ->
+                            nameActor.text = staffInfo[0]?.nameRu ?: ""
+                            profession.text = staffInfo[0]?.profession
                             Glide
                                 .with(poster.context)
-                                .load(it[0]?.posterUrl)
+                                .load(staffInfo[0]?.posterUrl)
                                 .into(poster)
                             //Получение списка лучших фильмов
                             viewModel.getListBestFilms()
@@ -108,10 +109,17 @@ class StaffInfoFragment : Fragment() {
                     if (loadingListFilms) {
                         viewModel.listStaffInfo.collect { staffInfo ->
                             binding.tvCountFilms.text = staffInfo[0]?.films?.size.toString()
+                            //Кладем значение StaffInfo в общую ViewModel для Filmography
+                            sharedStaffInfoVM.staffInfo.value = staffInfo
                         }
                     }
                 }
             }
+        }
+
+        //Переход на экран фильмографии
+        binding.tvListFilmography.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_staff_info_to_navigation_filmography)
         }
 
 

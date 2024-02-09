@@ -42,4 +42,5 @@
     <string name="profession">Профессия</string>
     <string name="filmography">Фильмография</string>
     <string name="in_the_list">К списку</string>
+    <string name="name_movie">Название фильма</string>
 </resources>

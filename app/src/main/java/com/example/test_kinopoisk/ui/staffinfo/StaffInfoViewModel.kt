@@ -99,3 +99,7 @@ class StaffInfoViewModel private constructor() : ViewModel() {
     }
 
 }
+
+class SharedStaffInfoViewModel : ViewModel() {
+    var staffInfo = MutableStateFlow<List<StaffInfo?>>(emptyList())
+}

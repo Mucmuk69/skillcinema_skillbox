@@ -127,6 +127,7 @@ class MovieInfoViewModel private constructor() : ViewModel() {
                     onSuccess = {
                         _listActors.value = it
                             .filter { listStaff -> listStaff.professionKey == "ACTOR" }
+                            .distinctBy { listStaff -> listStaff.nameRu ?: listStaff.nameEn }
                         _listStaff.value = it
                             .filter { listStaff -> listStaff.professionKey != "ACTOR" }
                             .distinctBy { listStaff -> listStaff.nameRu ?: listStaff.nameEn }
