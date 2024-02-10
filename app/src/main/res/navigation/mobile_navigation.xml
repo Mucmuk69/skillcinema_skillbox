@@ -33,9 +33,9 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.test_kinopoisk.ui.notifications.NotificationsFragment"
+        android:name="com.example.test_kinopoisk.ui.searching.SearchingFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_searching" />
 
     <fragment
         android:id="@+id/navigation_onboarding"
@@ -133,5 +133,14 @@
             app:destination="@id/navigation_movie_info" />
     </fragment>
 
+    <fragment
+        android:id="@+id/navigation_searching"
+        android:name="com.example.test_kinopoisk.ui.searching.SearchingFragment"
+        tools:layout="@layout/fragment_searching">
+
+        <action
+            android:id="@+id/action_navigation_searching_to_navigation_movie_info"
+            app:destination="@id/navigation_movie_info" />
+    </fragment>
 
 </navigation>

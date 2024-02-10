@@ -2,6 +2,7 @@ package com.example.data
 
 import com.example.data.entity.CountriesAndGenresMapper
 import com.example.data.entity.FilmInfoMapper
+import com.example.data.entity.FilmKeywordMapper
 import com.example.data.entity.ListStaffMapper
 import com.example.data.entity.MovieImagesMapper
 import com.example.data.entity.MovieMapper
@@ -13,6 +14,7 @@ import com.example.domain.FilmDataInterface
 import com.example.domain.entity.data_model_country_and_genre.CountriesAndGenres
 import com.example.domain.entity.data_model_movie.Movie
 import com.example.domain.entity.data_model_movie_info.FilmInfo
+import com.example.domain.entity.data_model_search.FilmKeyword
 import com.example.domain.entity.data_model_serial_seasons.Seasons
 import com.example.domain.entity.data_model_similar_movies.SimilarMovies
 import com.example.domain.entity.data_model_staff.ListStaff
@@ -27,6 +29,7 @@ class FilmDataInterfaceImpl : FilmDataInterface {
     private val staffInfoMapper = StaffInfoMapper
     private val listStaffMapper = ListStaffMapper
     private val similarMoviesMapper = SimilarMoviesMapper
+    private val filmKeywordMapper = FilmKeywordMapper
 
     //Премьеры
     override suspend fun getPremieres(year: Int, month: String): Movie =
@@ -103,5 +106,11 @@ class FilmDataInterfaceImpl : FilmDataInterface {
     override suspend fun getSimilarMovies(id: Int): SimilarMovies =
         similarMoviesMapper.mapToSimilarMovies(
             RetrofitInstance.retrofit.similarMovies(id = id)
+        )
+
+    //Получить список фильмов по ключевому слову
+    override suspend fun getFilmKeyword(keyword: String): FilmKeyword =
+        filmKeywordMapper.mapToFilmKeyword(
+            RetrofitInstance.retrofit.filmKeyword(keyword = keyword)
         )
 }

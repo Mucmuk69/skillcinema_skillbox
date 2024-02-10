@@ -4,6 +4,7 @@ import com.example.domain.entity.data_model_country_and_genre.CountriesAndGenres
 import com.example.domain.entity.data_model_images.MovieImages
 import com.example.domain.entity.data_model_movie.Movie
 import com.example.domain.entity.data_model_movie_info.FilmInfo
+import com.example.domain.entity.data_model_search.FilmKeyword
 import com.example.domain.entity.data_model_serial_seasons.Seasons
 import com.example.domain.entity.data_model_similar_movies.SimilarMovies
 import com.example.domain.entity.data_model_staff.ListStaff
@@ -50,4 +51,7 @@ interface FilmDataInterface {
 
     //Получить список похожих фильмов
     suspend fun getSimilarMovies(id: Int): SimilarMovies
+
+    //Получить список фильмов по ключевому слову
+    suspend fun getFilmKeyword(keyword: String): FilmKeyword
 }

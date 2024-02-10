@@ -2,6 +2,7 @@ package com.example.data.retrofit
 
 import com.example.data.entity.CountriesAndGenresData
 import com.example.data.entity.FilmInfoData
+import com.example.data.entity.FilmKeywordData
 import com.example.data.entity.ListStaffData
 import com.example.data.entity.MovieData
 import com.example.data.entity.MovieImagesData
@@ -111,6 +112,13 @@ interface KinopoiskApi {
     suspend fun similarMovies(
         @Path("id") id: Int
     ): SimilarMoviesData
+
+    //Подборки фильмов
+    @Headers("X-API-KEY: $api_key")
+    @GET("/api/v2.1/films/search-by-keyword")
+    suspend fun filmKeyword(
+        @Query("keyword") keyword: String
+    ): FilmKeywordData
 
     private companion object {
         private const val api_key = "c305061c-5d0f-42ad-ac09-a0e0005d8710"

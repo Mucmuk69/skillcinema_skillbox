@@ -43,4 +43,9 @@
     <string name="filmography">Фильмография</string>
     <string name="in_the_list">К списку</string>
     <string name="name_movie">Название фильма</string>
+    <string name="country_ru">Страна</string>
+    <string name="duration_ru">Длительность</string>
+    <string name="year_ru">Год</string>
+    <string name="genre_ru">Жанр</string>
+    <string name="search">Search</string>
 </resources>
