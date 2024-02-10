@@ -36,33 +36,24 @@ class FilmographyChildFragment : Fragment() {
 
         binding.recyclerFilmography.adapter = filmographyAdapter
         arguments?.takeIf { it.containsKey(ARG_PROFESSION_KEY) }?.apply {
-            when (getInt(ARG_PROFESSION_KEY)) {
-                1 -> {
-                    lifecycleScope.launch {
-                        sharedStaffInfoVM.staffInfo.collect { staffInfo ->
-                            if (staffInfo.isNotEmpty()) {
-                                filmographyAdapter.submitList(staffInfo[0]?.films
-                                    ?.filter { film -> film.professionKey == "ACTOR" }
-                                    ?.distinctBy { film -> film.nameRu ?: film.nameEn }
-                                )
+            lifecycleScope.launch {
+                sharedStaffInfoVM.staffInfo.collect { filmInfo ->
+                    if (filmInfo.isNotEmpty()) {
+                        //Получаем список профессий
+                        val listProfessionKeys = filmInfo[0]?.films
+                            ?.mapNotNull { film -> film.professionKey }
+                            ?.distinctBy { it }
+                        //Получаем профессию из списка по текущей позиции TabLayout
+                        val selectedKey = listProfessionKeys?.getOrNull(getInt(ARG_PROFESSION_KEY)-1)
+                        //Передаем список фильмов в адаптер и фильтруем по профессии
+                        filmographyAdapter.submitList(filmInfo[0]?.films
+                            ?.filter { film ->
+                                film.professionKey == selectedKey
                             }
-                        }
+                            ?.distinctBy { film -> film.nameRu ?: film.nameEn }
+                        )
                     }
                 }
-
-                2 -> {
-//                    lifecycleScope.launch {
-//                        sharedStaffInfoVM.staffInfo.collect { staffInfo ->
-//                            if (staffInfo.isNotEmpty()) {
-//                                filmographyAdapter.submitList(staffInfo[0]?.films
-//                                    ?.filter { film -> film.professionKey == "HIMSELF" }
-//                                    ?.distinctBy { film -> film.nameRu ?: film.nameEn }
-//                                )
-//                            }
-//                        }
-//                    }
-                }
-                3 -> {}
             }
         }
     }
@@ -72,9 +63,9 @@ class FilmographyChildFragment : Fragment() {
         val movieId = item.filmId!!
         val movieInfoFragment = MovieInfoFragment.newInstance(movieId = movieId)
         val currentDestination = findNavController().currentDestination
-        if (currentDestination?.id == R.id.navigation_filmography_child) {
+        if (currentDestination?.id == R.id.navigation_filmography) {
             findNavController().navigate(
-                R.id.action_navigation_filmography_child_to_navigation_movie_info,
+                R.id.action_navigation_filmography_to_navigation_movie_info,
                 movieInfoFragment.arguments
             )
         }

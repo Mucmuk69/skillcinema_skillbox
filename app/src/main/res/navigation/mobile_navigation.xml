@@ -128,16 +128,10 @@
         android:name="com.example.test_kinopoisk.ui.staffinfo.FilmographyParentFragment"
         tools:layout="@layout/fragment_filmography_parent">
 
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_filmography_child"
-        android:name="com.example.test_kinopoisk.ui.staffinfo.FilmographyChildFragment"
-        tools:layout="@layout/fragment_filmography_child">
-
         <action
-            android:id="@+id/action_navigation_filmography_child_to_navigation_movie_info"
+            android:id="@+id/action_navigation_filmography_to_navigation_movie_info"
             app:destination="@id/navigation_movie_info" />
     </fragment>
+
 
 </navigation>
