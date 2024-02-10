@@ -22,8 +22,6 @@ class FilmographyAdapter(
         val item = getItem(position)
         with(holder.binding) {
             nameFilm.text = item.nameRu ?: item.nameEn
-            nameFilm.isClickable = true
-            nameFilm.isFocusable = true
         }
         holder.binding.root.setOnClickListener {
             item?.let {
