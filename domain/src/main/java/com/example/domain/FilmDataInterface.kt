@@ -17,15 +17,10 @@ interface FilmDataInterface {
     suspend fun getPremieres(year: Int, month: String): Movie
 
     //Динамическая подборка по стране и жанру
-    suspend fun getFilmsSearching(
+    suspend fun getDynamicFilms(
         countries: List<Int>,
         genres: List<Int>,
-        order: String,
         type: String,
-        ratingFrom: Int,
-        ratingTo: Int,
-        yearFrom: Int,
-        yearTo: Int,
         page: Int
     ): Movie
 
@@ -58,4 +53,17 @@ interface FilmDataInterface {
 
     //Получить список актеров, режиссеров и т.п. по имени
     suspend fun getStaffKeyword(name: String): StaffKeyword
+
+    //Получить список фильмов по различным фильтрам в поиске
+    suspend fun getFilmSearching(
+        countries: List<Int>,
+        genres: List<Int>,
+        order: String,
+        type: String,
+        ratingFrom: Int,
+        ratingTo: Int,
+        yearFrom: Int,
+        yearTo: Int,
+        keyword: String
+    ): Movie
 }

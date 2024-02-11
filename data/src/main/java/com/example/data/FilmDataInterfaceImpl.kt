@@ -40,27 +40,17 @@ class FilmDataInterfaceImpl : FilmDataInterface {
 
 
     //Динамическая подборка
-    override suspend fun getFilmsSearching(
+    override suspend fun getDynamicFilms(
         countries: List<Int>,
         genres: List<Int>,
-        order: String,
         type: String,
-        ratingFrom: Int,
-        ratingTo: Int,
-        yearFrom: Int,
-        yearTo: Int,
         page: Int
     ): Movie =
         movieMapper.mapToMovie(
-            RetrofitInstance.retrofit.filmsSearching(
+            RetrofitInstance.retrofit.dynamicFilms(
                 countries = countries,
                 genres = genres,
-                order = order,
                 type = type,
-                ratingFrom = ratingFrom,
-                ratingTo = ratingTo,
-                yearFrom = yearFrom,
-                yearTo = yearTo,
                 page = page
             )
         )
@@ -99,7 +89,8 @@ class FilmDataInterfaceImpl : FilmDataInterface {
     //Получить кадры из фильма и т.п.
     override suspend fun getMovieImages(id: Int, type: String) =
         movieImagesMapper.mapToMovieImages(
-            RetrofitInstance.retrofit.movieImages(id = id, type = type))
+            RetrofitInstance.retrofit.movieImages(id = id, type = type)
+        )
 
     //Получить список похожих фильмов
     override suspend fun getSimilarMovies(id: Int): SimilarMovies =
@@ -117,5 +108,31 @@ class FilmDataInterfaceImpl : FilmDataInterface {
     override suspend fun getStaffKeyword(name: String): StaffKeyword =
         staffKeywordMapper.mapToStaffKeyword(
             RetrofitInstance.retrofit.staffKeyword(name = name)
+        )
+
+    //Получить список фильмов по различным фильтрам в поиске
+    override suspend fun getFilmSearching(
+        countries: List<Int>,
+        genres: List<Int>,
+        order: String,
+        type: String,
+        ratingFrom: Int,
+        ratingTo: Int,
+        yearFrom: Int,
+        yearTo: Int,
+        keyword: String
+    ): Movie =
+        movieMapper.mapToMovie(
+            RetrofitInstance.retrofit.filmSearching(
+                countries = countries,
+                genres = genres,
+                order = order,
+                type = type,
+                ratingFrom = ratingFrom,
+                ratingTo = ratingTo,
+                yearFrom = yearFrom,
+                yearTo = yearTo,
+                keyword = keyword
+            )
         )
 }

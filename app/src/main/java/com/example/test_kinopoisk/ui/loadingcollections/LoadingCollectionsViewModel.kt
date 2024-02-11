@@ -127,12 +127,7 @@ class DashboardViewModel private constructor() : ViewModel() {
             MoviePagingSourceDynamic(
                 countries = _randomCountry.value,
                 genres = _randomGenre.value,
-                order = RATING,
                 type = FILM,
-                ratingFrom = RATING_FROM,
-                ratingTo = RATING_TO,
-                yearFrom = YEAR_FROM,
-                yearTo = YEAR_TO,
                 useCase = dynamicCompilationUseCase
             )
         }
@@ -145,12 +140,7 @@ class DashboardViewModel private constructor() : ViewModel() {
             MoviePagingSourceDynamicSerials(
                 countries = _randomCountry.value,
                 genres = _randomGenre.value,
-                order = RATING,
                 type = TV_SERIES,
-                ratingFrom = RATING_FROM,
-                ratingTo = RATING_TO,
-                yearFrom = YEAR_FROM,
-                yearTo = YEAR_TO,
                 useCase = dynamicCompilationUseCase
             )
         }
@@ -159,13 +149,8 @@ class DashboardViewModel private constructor() : ViewModel() {
     private companion object {
         private const val TOP_POPULAR_ALL = "TOP_POPULAR_ALL"
         private const val TOP_250_MOVIES = "TOP_250_MOVIES"
-        private const val RATING = "RATING"
         private const val TV_SERIES = "TV_SERIES"
         private const val FILM = "FILM"
-        private const val RATING_FROM = 0
-        private const val RATING_TO = 10
-        private const val YEAR_FROM = 1000
-        private const val YEAR_TO = 3000
     }
 }
 

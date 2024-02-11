@@ -8,23 +8,13 @@ class DynamicCompilationUseCase(private val filmDataInterface: FilmDataInterface
     suspend fun execute(
         countries: List<Int>,
         genres: List<Int>,
-        order: String,
         type: String,
-        ratingFrom: Int,
-        ratingTo: Int,
-        yearFrom: Int,
-        yearTo: Int,
         page: Int
     ): Movie {
-        return filmDataInterface.getFilmsSearching(
+        return filmDataInterface.getDynamicFilms(
             countries,
             genres,
-            order,
             type,
-            ratingFrom,
-            ratingTo,
-            yearFrom,
-            yearTo,
             page
         )
     }

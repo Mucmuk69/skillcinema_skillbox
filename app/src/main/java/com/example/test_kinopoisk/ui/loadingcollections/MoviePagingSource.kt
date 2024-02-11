@@ -140,12 +140,7 @@ class MoviePagingSourceTop250(
 class MoviePagingSourceDynamic(
     private val countries: List<Int>,
     private val genres: List<Int>,
-    private val order: String,
     private val type: String,
-    private val ratingFrom: Int,
-    private val ratingTo: Int,
-    private val yearFrom: Int,
-    private val yearTo: Int,
     private val useCase: DynamicCompilationUseCase
 ) : PagingSource<Int, Items>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Items> {
@@ -155,12 +150,7 @@ class MoviePagingSourceDynamic(
             useCase.execute(
                 countries,
                 genres,
-                order,
                 type,
-                ratingFrom,
-                ratingTo,
-                yearFrom,
-                yearTo,
                 page
             )
         }.fold(
@@ -198,12 +188,7 @@ class MoviePagingSourceDynamic(
 class MoviePagingSourceDynamicSerials(
     private val countries: List<Int>,
     private val genres: List<Int>,
-    private val order: String,
     private val type: String,
-    private val ratingFrom: Int,
-    private val ratingTo: Int,
-    private val yearFrom: Int,
-    private val yearTo: Int,
     private val useCase: DynamicCompilationUseCase
 ) : PagingSource<Int, Items>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Items> {
@@ -213,12 +198,7 @@ class MoviePagingSourceDynamicSerials(
             useCase.execute(
                 countries,
                 genres,
-                order,
                 type,
-                ratingFrom,
-                ratingTo,
-                yearFrom,
-                yearTo,
                 page
             )
         }.fold(

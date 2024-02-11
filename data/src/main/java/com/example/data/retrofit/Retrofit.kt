@@ -46,15 +46,10 @@ interface KinopoiskApi {
     //Динамическая подборка по стране и жанру
     @Headers("X-API-KEY: $api_key")
     @GET("/api/v2.2/films")
-    suspend fun filmsSearching(
+    suspend fun dynamicFilms(
         @Query("countries") countries: List<Int>,
         @Query("genres") genres: List<Int>,
-        @Query("order") order: String,
         @Query("type") type: String,
-        @Query("ratingFrom") ratingFrom: Int,
-        @Query("ratingTo") ratingTo: Int,
-        @Query("yearFrom") yearFrom: Int,
-        @Query("yearTo") yearTo: Int,
         @Query("page") page: Int
     ): MovieData
 
@@ -127,6 +122,21 @@ interface KinopoiskApi {
     suspend fun staffKeyword(
         @Query("name") name: String
     ): StaffKeywordData
+
+    //Динамическая подборка по стране и жанру
+    @Headers("X-API-KEY: $api_key")
+    @GET("/api/v2.2/films")
+    suspend fun filmSearching(
+        @Query("countries") countries: List<Int>,
+        @Query("genres") genres: List<Int>,
+        @Query("order") order: String,
+        @Query("type") type: String,
+        @Query("ratingFrom") ratingFrom: Int,
+        @Query("ratingTo") ratingTo: Int,
+        @Query("yearFrom") yearFrom: Int,
+        @Query("yearTo") yearTo: Int,
+        @Query("keyword") keyword: String
+    ): MovieData
 
     private companion object {
         private const val api_key = "c305061c-5d0f-42ad-ac09-a0e0005d8710"
