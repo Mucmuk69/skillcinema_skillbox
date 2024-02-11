@@ -1,9 +1,9 @@
 package com.example.data.entity
 
-import com.example.domain.entity.data_model_search.Country
-import com.example.domain.entity.data_model_search.Film
-import com.example.domain.entity.data_model_search.FilmKeyword
-import com.example.domain.entity.data_model_search.Genre
+import com.example.domain.entity.data_model_search.film_keyword.Country
+import com.example.domain.entity.data_model_search.film_keyword.Film
+import com.example.domain.entity.data_model_search.film_keyword.FilmKeyword
+import com.example.domain.entity.data_model_search.film_keyword.Genre
 
 data class FilmKeywordData(
     val films: List<FilmKeywordInfoData>,

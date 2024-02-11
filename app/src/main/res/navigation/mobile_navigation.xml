@@ -141,6 +141,9 @@
         <action
             android:id="@+id/action_navigation_searching_to_navigation_movie_info"
             app:destination="@id/navigation_movie_info" />
+        <action
+            android:id="@+id/action_navigation_searching_to_navigation_staff_info"
+            app:destination="@id/navigation_staff_info" />
     </fragment>
 
 </navigation>

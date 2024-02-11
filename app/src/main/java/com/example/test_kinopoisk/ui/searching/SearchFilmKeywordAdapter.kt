@@ -3,13 +3,12 @@ package com.example.test_kinopoisk.ui.searching
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.example.domain.entity.data_model_search.Film
+import com.example.domain.entity.data_model_search.film_keyword.Film
 import com.example.test_kinopoisk.databinding.MovieItemAllBinding
 
 class SearchFilmKeywordAdapter(
@@ -33,7 +32,7 @@ class SearchFilmKeywordAdapter(
             if (item?.rating != null) {
                 rating.text = item.rating.toString()
             } else {
-                rating.isVisible = false
+                rating.visibility = View.GONE
             }
             item?.let {
                 Glide

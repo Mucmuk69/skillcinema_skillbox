@@ -9,6 +9,7 @@ import com.example.data.entity.MovieImagesData
 import com.example.data.entity.SerialSeasonsData
 import com.example.data.entity.SimilarMoviesData
 import com.example.data.entity.StaffInfoData
+import com.example.data.entity.StaffKeywordData
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -113,12 +114,19 @@ interface KinopoiskApi {
         @Path("id") id: Int
     ): SimilarMoviesData
 
-    //Подборки фильмов
+    //Поиск фильма по названию
     @Headers("X-API-KEY: $api_key")
     @GET("/api/v2.1/films/search-by-keyword")
     suspend fun filmKeyword(
         @Query("keyword") keyword: String
     ): FilmKeywordData
+
+    //Поиск актера, режиссера и т.п. по имени
+    @Headers("X-API-KEY: $api_key")
+    @GET("/api/v1/persons")
+    suspend fun staffKeyword(
+        @Query("name") name: String
+    ): StaffKeywordData
 
     private companion object {
         private const val api_key = "c305061c-5d0f-42ad-ac09-a0e0005d8710"

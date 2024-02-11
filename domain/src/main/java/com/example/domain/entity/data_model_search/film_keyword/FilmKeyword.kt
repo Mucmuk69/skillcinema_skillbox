@@ -1,4 +1,4 @@
-package com.example.domain.entity.data_model_search
+package com.example.domain.entity.data_model_search.film_keyword
 
 data class FilmKeyword(
     val films: List<Film>,

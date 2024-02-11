@@ -47,5 +47,6 @@
     <string name="duration_ru">Длительность</string>
     <string name="year_ru">Год</string>
     <string name="genre_ru">Жанр</string>
-    <string name="search">Search</string>
+    <string name="search">Поиск</string>
+    <string name="no_result">К сожалению, по вашему запросу\nничего не найдено</string>
 </resources>
