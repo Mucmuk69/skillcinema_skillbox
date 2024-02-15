@@ -82,6 +82,11 @@ class SearchingFragment : Fragment() {
                         }
                     }
                 }
+
+                binding.ivAdvancedSearch.setOnClickListener {
+                    binding.constraintResultSearch.visibility = View.GONE
+                    binding.constraintAdvancedSearch.visibility = View.VISIBLE
+                }
 //                searchStaffJob?.cancel()
 //                //Получить список актеров, режиссеров по имени
 //                searchStaffJob = viewLifecycleOwner.lifecycleScope.launch {

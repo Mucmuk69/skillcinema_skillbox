@@ -1,48 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.searching.SearchingFragment">
 
-    <SearchView
-        android:id="@+id/sv_search"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_result_search"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="20dp"
-        app:iconifiedByDefault="false"
-        android:background="@drawable/search_background"
-        android:padding="5dp" />
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_search_film"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        <SearchView
+            android:id="@+id/sv_search"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+            android:background="@drawable/search_background"
+            android:padding="5dp"
+            app:iconifiedByDefault="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/sv_search"
+            app:layout_constraintEnd_toEndOf="@+id/sv_search"
+            app:layout_constraintHorizontal_bias="0.85"
+            app:layout_constraintStart_toStartOf="@+id/sv_search"
+            app:layout_constraintTop_toTopOf="@+id/sv_search" />
+
+        <ImageView
+            android:id="@+id/iv_advanced_search"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="@string/icon_advanced_search"
+            android:scaleX="0.7"
+            android:scaleY="0.8"
+            android:src="@drawable/advanced_search_24"
+            app:layout_constraintBottom_toBottomOf="@+id/sv_search"
+            app:layout_constraintEnd_toEndOf="@+id/sv_search"
+            app:layout_constraintHorizontal_bias="0.97"
+            app:layout_constraintStart_toStartOf="@+id/sv_search"
+            app:layout_constraintTop_toTopOf="@+id/sv_search" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_search_film"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:padding="5dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sv_search"
+            tools:listitem="@layout/movie_item_all" />
+
+        <!--    <androidx.recyclerview.widget.RecyclerView-->
+        <!--        android:id="@+id/recycler_search_staff"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_margin="10dp"-->
+        <!--        android:orientation="vertical"-->
+        <!--        android:padding="5dp"-->
+        <!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+        <!--        tools:listitem="@layout/staff_item" />-->
+
+        <TextView
+            android:id="@+id/tv_no_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:text="@string/no_result"
+            android:textSize="18sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sv_search" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_advanced_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:orientation="vertical"
-        android:padding="5dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/movie_item_all" />
+        android:padding="10dp">
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/recycler_search_staff"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_margin="10dp"-->
-<!--        android:orientation="vertical"-->
-<!--        android:padding="5dp"-->
-<!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--        tools:listitem="@layout/staff_item" />-->
+        <TextView
+            android:id="@+id/tv_advanced_search"
+            style="@style/TitleTextAppearance18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/advanced_search_ru"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_no_result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:visibility="gone"
-        android:text="@string/no_result"
-        android:textSize="18sp" />
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:checkable="true"
+            android:theme="@style/Theme.MaterialComponents.Light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_advanced_search">
 
-</LinearLayout>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/All"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_films"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/films_ru"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/chip_all"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_serials"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/serial_ru"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/chip_films"
+                app:layout_constraintTop_toTopOf="parent" />
+        </com.google.android.material.chip.ChipGroup>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>

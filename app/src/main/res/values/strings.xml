@@ -49,4 +49,8 @@
     <string name="genre_ru">Жанр</string>
     <string name="search">Поиск</string>
     <string name="no_result">К сожалению, по вашему запросу\nничего не найдено</string>
+    <string name="icon_advanced_search">icon_advanced_search</string>
+    <string name="films_ru">Фильмы</string>
+    <string name="serial_ru">Сериалы</string>
+    <string name="advanced_search_ru">Расширенный поиск</string>
 </resources>
