@@ -146,6 +146,7 @@ class LoadingCollectionsFragment : Fragment() {
         //Сохранение адаптеров и название страны и жанра в общую ViewModel
         sharedViewModel.allAdapters.value = listAdapters
         sharedViewModel.countryAndGenre.value = viewModel.countryAndGenre.value
+        sharedViewModel.listCountriesAndGenres.value = viewModel.listCountriesAndGenres.value
     }
 
 

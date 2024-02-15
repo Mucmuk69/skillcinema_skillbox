@@ -20,19 +20,15 @@ class SearchingViewModel : ViewModel() {
     val isLoadingFilmSearching = _isLoadingFilmSearching.asStateFlow()
     private var _isLoadingFilmKeyword = MutableStateFlow(false)
     val isLoadingFilmKeyword = _isLoadingFilmKeyword.asStateFlow()
-//    private var _isLoadingStaffKeyword = MutableStateFlow(false)
-//    val isLoadingStaffKeyword = _isLoadingStaffKeyword.asStateFlow()
+
 
     private var _listFilmSearching = MutableStateFlow<List<Movie>>(emptyList())
     val listFilmSearching = _listFilmSearching.asStateFlow()
     private var _listFilmKeyword = MutableStateFlow<List<FilmKeyword>>(emptyList())
     val listFilmKeyword = _listFilmKeyword.asStateFlow()
-//    private var _listStaffKeyword = MutableStateFlow<List<StaffKeyword>>(emptyList())
-//    val listStaffKeyword = _listStaffKeyword.asStateFlow()
 
     private val filmSearchingUseCase = FilmSearchingUseCase(repository)
     private val filmKeywordUseCase = FilmKeywordUseCase(repository)
-//    private val staffKeywordUseCase = StaffKeywordUseCase(repository)
 
     fun getFilmSearching(
         countries: List<Int>,
@@ -84,20 +80,4 @@ class SearchingViewModel : ViewModel() {
             )
         }
     }
-
-//    //Получение актеров, режиссеров и т.п. по имени
-//    fun getStaffKeyword(name: String) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            runCatching {
-//                staffKeywordUseCase.execute(name = name)
-//            }.fold(
-//                onSuccess = {
-//                    _listStaffKeyword.value = listOf(it)
-//                    Log.d("MyTag", "SearchVM - staff: $it")
-//                    _isLoadingStaffKeyword.value = true
-//                },
-//                onFailure = { Log.d("MyTag", "error:  ${it.message}") }
-//            )
-//        }
-//    }
 }

@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.searching.SearchingFragment">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraint_result_search"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
 
         <SearchView
             android:id="@+id/sv_search"
@@ -60,15 +54,6 @@
             app:layout_constraintTop_toBottomOf="@+id/sv_search"
             tools:listitem="@layout/movie_item_all" />
 
-        <!--    <androidx.recyclerview.widget.RecyclerView-->
-        <!--        android:id="@+id/recycler_search_staff"-->
-        <!--        android:layout_width="wrap_content"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:layout_margin="10dp"-->
-        <!--        android:orientation="vertical"-->
-        <!--        android:padding="5dp"-->
-        <!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-        <!--        tools:listitem="@layout/staff_item" />-->
 
         <TextView
             android:id="@+id/tv_no_result"
@@ -82,67 +67,4 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sv_search" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraint_advanced_search"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:padding="10dp">
-
-        <TextView
-            android:id="@+id/tv_advanced_search"
-            style="@style/TitleTextAppearance18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/advanced_search_ru"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chip_group_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:checkable="true"
-            android:theme="@style/Theme.MaterialComponents.Light"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_advanced_search">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_all"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/All"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_films"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/films_ru"
-                android:textSize="18sp"
-                app:layout_constraintStart_toEndOf="@+id/chip_all"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_serials"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/serial_ru"
-                android:textSize="18sp"
-                app:layout_constraintStart_toEndOf="@+id/chip_films"
-                app:layout_constraintTop_toTopOf="parent" />
-        </com.google.android.material.chip.ChipGroup>
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

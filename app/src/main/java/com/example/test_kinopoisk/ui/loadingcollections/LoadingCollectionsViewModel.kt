@@ -31,7 +31,7 @@ class DashboardViewModel private constructor() : ViewModel() {
     val isLoading = _isLoading.asStateFlow()
 
     private var _listCountriesAndGenres = MutableStateFlow<List<CountriesAndGenres>>(emptyList())
-    private val listCountriesAndGenres = _listCountriesAndGenres.asStateFlow()
+    val listCountriesAndGenres = _listCountriesAndGenres.asStateFlow()
     private var _randomCountry = MutableStateFlow<List<Int>>(emptyList())
     private val randomCountry = _randomCountry.asStateFlow()
     private var _randomGenre = MutableStateFlow<List<Int>>(emptyList())
@@ -157,4 +157,5 @@ class DashboardViewModel private constructor() : ViewModel() {
 class SharedCollectionsViewModel : ViewModel() {
     var allAdapters = MutableStateFlow<List<MoviePagedAdapter>>(emptyList())
     var countryAndGenre = MutableStateFlow<String?>(null)
+    var listCountriesAndGenres = MutableStateFlow<List<CountriesAndGenres>>(emptyList())
 }

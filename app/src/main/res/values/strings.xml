@@ -53,4 +53,13 @@
     <string name="films_ru">Фильмы</string>
     <string name="serial_ru">Сериалы</string>
     <string name="advanced_search_ru">Расширенный поиск</string>
+    <string name="russia_ru">Россия</string>
+    <string name="comedy_ru">Комедия</string>
+    <string name="_2024">2024</string>
+    <string name="rating_ru">Рейтинг</string>
+    <string name="any">Любой</string>
+    <string name="date_ru">Дата</string>
+    <string name="popular_ru">Популярность</string>
+    <string name="sort_ru">Сортировать</string>
+    <string name="show_ru">Показывать</string>
 </resources>

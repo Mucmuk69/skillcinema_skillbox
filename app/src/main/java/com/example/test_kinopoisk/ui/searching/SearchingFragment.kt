@@ -26,8 +26,6 @@ class SearchingFragment : Fragment() {
 
     private val searchingViewModel: SearchingViewModel by activityViewModels()
     private val searchFilmKeywordAdapter = SearchFilmKeywordAdapter { film -> onFilmClick(film) }
-//    private val searchStaffKeywordAdapter =
-//        SearchStaffKeywordAdapter { staff -> onStaffClick(staff) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,11 +39,9 @@ class SearchingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerSearchFilm.adapter = searchFilmKeywordAdapter
-//        binding.recyclerSearchStaff.adapter = searchStaffKeywordAdapter
 
         val searchView = binding.svSearch
         var searchFilmJob: Job? = null
-//        var searchStaffJob: Job? = null
 
         //Вся область поисковой строки кликабельна
         searchView.setOnClickListener {
@@ -82,39 +78,14 @@ class SearchingFragment : Fragment() {
                         }
                     }
                 }
-
-                binding.ivAdvancedSearch.setOnClickListener {
-                    binding.constraintResultSearch.visibility = View.GONE
-                    binding.constraintAdvancedSearch.visibility = View.VISIBLE
-                }
-//                searchStaffJob?.cancel()
-//                //Получить список актеров, режиссеров по имени
-//                searchStaffJob = viewLifecycleOwner.lifecycleScope.launch {
-//                    repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                        //Если введено более 3‑х символов, то делаем запрос
-//                        //Новый запрос после добавления символов спустя 3 секунды
-//                        delay(4_000)
-//                        if (newText != null && newText.length >= 5) {
-//                            searchingViewModel.getStaffKeyword(newText)
-//                        }
-//                        searchingViewModel.isLoadingStaffKeyword.collect { loadingStaffKeyword ->
-//                            if (loadingStaffKeyword) {
-//                                searchingViewModel.listStaffKeyword.collect { staffKeyword ->
-//                                    //Если количество найденных актеров 0, то выводим сообщение
-//                                    if (staffKeyword[0].total != null) {
-//                                        searchStaffKeywordAdapter.submitList(staffKeyword[0].items)
-//                                    } else {
-//                                        // Если актеров не найдено, вывести сообщение о том, что результатов не найдено
-//                                        binding.tvNoResult.visibility = View.VISIBLE
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
                 return true
             }
         })
+
+        binding.ivAdvancedSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_searching_to_navigation_advanced_search)
+        }
+
     }
 
     //Клик по фильму, переход к инфо о фильме
@@ -129,19 +100,6 @@ class SearchingFragment : Fragment() {
             )
         }
     }
-
-//    //Клик по актеру, переход к инфо об актере
-//    private fun onStaffClick(staff: Item) {
-//        val staffId = staff.kinopoiskId!!
-//        val staffInfoFragment = StaffInfoFragment.newInstance(staffId = staffId)
-//        val currentDestination = findNavController().currentDestination
-//        if (currentDestination?.id == R.id.navigation_searching) {
-//            findNavController().navigate(
-//                R.id.action_navigation_searching_to_navigation_staff_info,
-//                staffInfoFragment.arguments
-//            )
-//        }
-//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

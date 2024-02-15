@@ -142,8 +142,41 @@
             android:id="@+id/action_navigation_searching_to_navigation_movie_info"
             app:destination="@id/navigation_movie_info" />
         <action
-            android:id="@+id/action_navigation_searching_to_navigation_staff_info"
-            app:destination="@id/navigation_staff_info" />
+            android:id="@+id/action_navigation_searching_to_navigation_advanced_search"
+            app:destination="@id/navigation_advanced_search" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_advanced_search"
+        android:name="com.example.test_kinopoisk.ui.searching.AdvancedSearchFragment"
+        tools:layout="@layout/fragment_advanced_search">
+
+        <action
+            android:id="@+id/action_navigation_advanced_search_to_navigation_search_country"
+            app:destination="@id/navigation_search_country" />
+        <action
+            android:id="@+id/action_navigation_advanced_search_to_navigation_search_genre"
+            app:destination="@id/navigation_search_genre" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_search_country"
+        android:name="com.example.test_kinopoisk.ui.searching.SearchCountryFragment"
+        tools:layout="@layout/fragment_search_country">
+
+        <action
+            android:id="@+id/action_navigation_search_country_to_navigation_advanced_search"
+            app:destination="@id/navigation_advanced_search" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_search_genre"
+        android:name="com.example.test_kinopoisk.ui.searching.SearchGenreFragment"
+        tools:layout="@layout/fragment_search_genre">
+
+        <action
+            android:id="@+id/action_navigation_search_genre_to_navigation_advanced_search"
+            app:destination="@id/navigation_advanced_search" />
     </fragment>
 
 </navigation>
