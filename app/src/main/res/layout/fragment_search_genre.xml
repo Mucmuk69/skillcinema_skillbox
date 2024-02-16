@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.searching.SearchGenreFragment">
 
+    <TextView
+        android:id="@+id/title_genre"
+        style="@style/TitleTextAppearance18"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:text="@string/genre_ru"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <SearchView
         android:id="@+id/sv_search_genre"
         android:layout_width="match_parent"
@@ -13,18 +25,26 @@
         android:layout_margin="20dp"
         android:background="@drawable/search_background"
         android:padding="5dp"
+        android:queryHint="Введите жанр"
         app:iconifiedByDefault="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/title_genre" />
+
+    <View
+        android:id="@+id/view_offset_helper"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sv_search_genre" />
 
     <ListView
         android:id="@+id/tv_list_genres"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
         android:layout_margin="5dp"
+        android:padding="5dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sv_search_genre"/>
+        app:layout_constraintTop_toBottomOf="@+id/view_offset_helper" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -157,6 +157,9 @@
         <action
             android:id="@+id/action_navigation_advanced_search_to_navigation_search_genre"
             app:destination="@id/navigation_search_genre" />
+        <action
+            android:id="@+id/action_navigation_advanced_search_to_navigation_search_year"
+            app:destination="@id/navigation_search_year" />
     </fragment>
 
     <fragment
@@ -176,6 +179,16 @@
 
         <action
             android:id="@+id/action_navigation_search_genre_to_navigation_advanced_search"
+            app:destination="@id/navigation_advanced_search" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_search_year"
+        android:name="com.example.test_kinopoisk.ui.searching.SearchYearFragment"
+        tools:layout="@layout/fragment_search_year">
+
+        <action
+            android:id="@+id/action_navigation_search_year_to_navigation_advanced_search"
             app:destination="@id/navigation_advanced_search" />
     </fragment>
 
