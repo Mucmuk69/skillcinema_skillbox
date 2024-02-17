@@ -30,6 +30,7 @@ class SearchingViewModel : ViewModel() {
     private val filmSearchingUseCase = FilmSearchingUseCase(repository)
     private val filmKeywordUseCase = FilmKeywordUseCase(repository)
 
+    //Получение фильмов/сериалов через расширенный поиск
     fun getFilmSearching(
         countries: List<Int>,
         genres: List<Int>,
@@ -38,8 +39,7 @@ class SearchingViewModel : ViewModel() {
         ratingFrom: Int,
         ratingTo: Int,
         yearFrom: Int,
-        yearTo: Int,
-        keyword: String
+        yearTo: Int
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
@@ -51,8 +51,7 @@ class SearchingViewModel : ViewModel() {
                     ratingFrom = ratingFrom,
                     ratingTo = ratingTo,
                     yearFrom = yearFrom,
-                    yearTo = yearTo,
-                    keyword = keyword
+                    yearTo = yearTo
                 )
             }.fold(
                 onSuccess = {

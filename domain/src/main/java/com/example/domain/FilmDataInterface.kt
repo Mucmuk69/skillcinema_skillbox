@@ -63,7 +63,6 @@ interface FilmDataInterface {
         ratingFrom: Int,
         ratingTo: Int,
         yearFrom: Int,
-        yearTo: Int,
-        keyword: String
+        yearTo: Int
     ): Movie
 }

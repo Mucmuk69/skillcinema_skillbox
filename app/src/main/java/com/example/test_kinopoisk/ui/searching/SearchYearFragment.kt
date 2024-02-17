@@ -4,14 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.test_kinopoisk.R
 import com.example.test_kinopoisk.databinding.FragmentSearchYearBinding
 import java.util.Calendar
 
-const val ARG_YEAR_FROM = "year from"
-const val ARG_YEAR_TO = "year to"
+const val ARG_YEAR_FROM_KEY = "year from"
+const val ARG_YEAR_TO_KEY = "year to"
 
 class SearchYearFragment : Fragment() {
 
@@ -29,6 +30,7 @@ class SearchYearFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Устанавливаем минимальное и максимальное значение года
         val yearPickerFrom = binding.pickerFrom
         val yearPickerTo = binding.pickerTo
         val currentYear = Calendar.getInstance().get(Calendar.YEAR)
@@ -50,17 +52,26 @@ class SearchYearFragment : Fragment() {
             }
         }
 
+        //Передаю значение года "с" и "до" в другой фрагмент
         binding.buttonChoice.setOnClickListener {
-            val advancedFragment = AdvancedSearchFragment()
-            val bundle = Bundle().apply {
-                putInt(ARG_YEAR_FROM, yearPickerFrom.value)
-                putInt(ARG_YEAR_TO, yearPickerTo.value)
+            if (yearPickerFrom.value < yearPickerTo.value) {
+                val advancedFragment = AdvancedSearchFragment()
+                val bundle = Bundle().apply {
+                    putInt(ARG_YEAR_FROM_KEY, yearPickerFrom.value)
+                    putInt(ARG_YEAR_TO_KEY, yearPickerTo.value)
+                }
+                advancedFragment.arguments = bundle
+                findNavController().navigate(
+                    R.id.action_navigation_search_year_to_navigation_advanced_search,
+                    bundle
+                )
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Период С должен быть меньше или равен периоду До",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-            advancedFragment.arguments = bundle
-            findNavController().navigate(
-                R.id.action_navigation_search_year_to_navigation_advanced_search,
-                bundle
-            )
         }
     }
 }

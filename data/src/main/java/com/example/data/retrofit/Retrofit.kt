@@ -134,8 +134,7 @@ interface KinopoiskApi {
         @Query("ratingFrom") ratingFrom: Int,
         @Query("ratingTo") ratingTo: Int,
         @Query("yearFrom") yearFrom: Int,
-        @Query("yearTo") yearTo: Int,
-        @Query("keyword") keyword: String
+        @Query("yearTo") yearTo: Int
     ): MovieData
 
     private companion object {

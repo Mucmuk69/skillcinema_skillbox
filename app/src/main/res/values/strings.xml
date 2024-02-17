@@ -66,4 +66,8 @@
     <string name="choice_ru">Выбрать</string>
     <string name="from_ru">С</string>
     <string name="to_ru">До</string>
+    <string name="search_from">Искать в период с</string>
+    <string name="search_to">Искать в период до</string>
+    <string name="search_ru">Искать</string>
+    <string name="search_text_previous">Для начала поиска введите не менее 3-х символов</string>
 </resources>

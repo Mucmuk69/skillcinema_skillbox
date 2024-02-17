@@ -119,8 +119,7 @@ class FilmDataInterfaceImpl : FilmDataInterface {
         ratingFrom: Int,
         ratingTo: Int,
         yearFrom: Int,
-        yearTo: Int,
-        keyword: String
+        yearTo: Int
     ): Movie =
         movieMapper.mapToMovie(
             RetrofitInstance.retrofit.filmSearching(
@@ -131,8 +130,7 @@ class FilmDataInterfaceImpl : FilmDataInterface {
                 ratingFrom = ratingFrom,
                 ratingTo = ratingTo,
                 yearFrom = yearFrom,
-                yearTo = yearTo,
-                keyword = keyword
+                yearTo = yearTo
             )
         )
 }

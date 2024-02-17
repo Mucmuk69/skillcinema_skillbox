@@ -160,6 +160,9 @@
         <action
             android:id="@+id/action_navigation_advanced_search_to_navigation_search_year"
             app:destination="@id/navigation_search_year" />
+        <action
+            android:id="@+id/action_navigation_advanced_search_to_navigation_searching"
+            app:destination="@id/navigation_searching" />
     </fragment>
 
     <fragment

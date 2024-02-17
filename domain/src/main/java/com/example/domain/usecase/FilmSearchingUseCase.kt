@@ -12,8 +12,7 @@ class FilmSearchingUseCase(private val filmDataInterface: FilmDataInterface) {
         ratingFrom: Int,
         ratingTo: Int,
         yearFrom: Int,
-        yearTo: Int,
-        keyword: String
+        yearTo: Int
     ): Movie {
         return filmDataInterface.getFilmSearching(
             countries = countries,
@@ -23,8 +22,7 @@ class FilmSearchingUseCase(private val filmDataInterface: FilmDataInterface) {
             ratingFrom = ratingFrom,
             ratingTo = ratingTo,
             yearFrom = yearFrom,
-            yearTo = yearTo,
-            keyword = keyword
+            yearTo = yearTo
         )
     }
 }

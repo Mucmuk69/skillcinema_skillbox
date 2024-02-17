@@ -9,6 +9,7 @@
 
     <TextView
         android:id="@+id/title_year"
+        style="@style/TitleTextAppearance18"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -24,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:padding="5dp"
-        android:text="Искать в период с"
+        android:text="@string/search_from"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_year" />
 
@@ -34,6 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:padding="10dp"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_from" />
 
@@ -43,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:padding="5dp"
-        android:text="Искать в период до"
+        android:text="@string/search_to"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/picker_from" />
 
