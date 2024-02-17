@@ -2,7 +2,6 @@ package com.example.test_kinopoisk.ui.searching
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.test_kinopoisk.R
 import com.example.test_kinopoisk.databinding.FragmentAdvancedSearchBinding
+import com.google.android.material.chip.Chip
 import java.util.Calendar
 
 class AdvancedSearchFragment : Fragment() {
@@ -42,12 +42,12 @@ class AdvancedSearchFragment : Fragment() {
             advancedSearchVM.genre.value = (arguments?.getString(ARG_GENRE_KEY))
         }
 
-        if (arguments?.getInt(ARG_YEAR_FROM) != null && arguments?.getInt(ARG_YEAR_FROM) != 0) {
+        if (arguments?.getInt(ARG_YEAR_FROM) != null && arguments?.getInt(ARG_YEAR_FROM) != ZERO) {
             advancedSearchVM.yearFrom.value = arguments?.getInt(ARG_YEAR_FROM)
         }
 
         val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-        if (arguments?.getInt(ARG_YEAR_TO) != null && arguments?.getInt(ARG_YEAR_TO) != 0) {
+        if (arguments?.getInt(ARG_YEAR_TO) != null && arguments?.getInt(ARG_YEAR_TO) != ZERO) {
             advancedSearchVM.yearTo.value = arguments?.getInt(ARG_YEAR_TO)
         }
 
@@ -60,23 +60,25 @@ class AdvancedSearchFragment : Fragment() {
         val typeAll = binding.chipAll
         val typeFilms = binding.chipFilms
         val typeSerials = binding.chipSerials
-        val chipGroup1 = binding.chipGroup1
+        val orderDate = binding.chipDate
+        val orderPopular = binding.chipPopular
+        val orderRating = binding.chipRating
 
-        choiceCountry.text = advancedSearchVM.country.value ?: "Россия"
-        choiceGenre.text = advancedSearchVM.genre.value ?: "Комедия"
+        choiceCountry.text = advancedSearchVM.country.value ?: RUSSIA
+        choiceGenre.text = advancedSearchVM.genre.value ?: COMEDY
         choiceYear.text =
-            "с ${advancedSearchVM.yearFrom.value ?: 1900} до ${advancedSearchVM.yearTo.value ?: currentYear}"
+            "с ${advancedSearchVM.yearFrom.value ?: MIN_YEAR} до ${advancedSearchVM.yearTo.value ?: currentYear}"
 
-        if (advancedSearchVM.ratingFrom.value == 0 || advancedSearchVM.ratingFrom.value == null &&
-            advancedSearchVM.ratingTo.value == 0 || advancedSearchVM.ratingTo.value == null
+        if (advancedSearchVM.ratingFrom.value == ZERO || advancedSearchVM.ratingFrom.value == null &&
+            advancedSearchVM.ratingTo.value == ZERO || advancedSearchVM.ratingTo.value == null
         ) {
-            choiceRating.text = "Любой"
+            choiceRating.text = ANY_RATING
         } else {
             choiceRating.text =
-                "с ${advancedSearchVM.ratingFrom.value ?: 0} до ${advancedSearchVM.ratingTo.value ?: 0}"
+                "с ${advancedSearchVM.ratingFrom.value ?: ZERO} до ${advancedSearchVM.ratingTo.value ?: ZERO}"
         }
-        seekBarFromFunc(seekBarRatingFrom, choiceRating)
-        seekBarFromFunc(seekBarRatingTo, choiceRating)
+        seekBarRatingFromTo(seekBarRatingFrom, choiceRating)
+        seekBarRatingFromTo(seekBarRatingTo, choiceRating)
 
         choiceCountry.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_advanced_search_to_navigation_search_country)
@@ -90,26 +92,122 @@ class AdvancedSearchFragment : Fragment() {
             findNavController().navigate(R.id.action_navigation_advanced_search_to_navigation_search_year)
         }
 
-        chipGroup1.setOnCheckedChangeListener { _, checkedId ->
-            when (checkedId) {
-                typeAll.id -> {
-                    advancedSearchVM.type.value = "ALL"
-                    Log.d("MyTag", "ASF: type (ALL) ${advancedSearchVM.type.value}")
+        chipForType(typeAll)
+        chipForType(typeFilms)
+        chipForType(typeSerials)
+        chipForOrder(orderDate)
+        chipForOrder(orderPopular)
+        chipForOrder(orderRating)
+
+        when (advancedSearchVM.type.value) {
+            TYPE_ALL -> {
+                typeAll.isChecked = true
+                typeAll.isClickable = false
+            }
+
+            TYPE_FILM -> {
+                typeFilms.isChecked = true
+                typeFilms.isClickable = false
+            }
+
+            TYPE_TV_SERIES -> {
+                typeSerials.isChecked = true
+                typeSerials.isClickable = false
+            }
+        }
+
+        when (advancedSearchVM.order.value) {
+            ORDER_DATE -> {
+                orderDate.isChecked = true
+                orderDate.isClickable = false
+            }
+
+            ORDER_POPULAR -> {
+                orderPopular.isChecked = true
+                orderPopular.isClickable = false
+            }
+
+            ORDER_RATING -> {
+                orderRating.isChecked = true
+                orderRating.isClickable = false
+            }
+        }
+    }
+
+    //Функция для сохранения значения поиска по типу и слушатель для Chip
+    private fun chipForType(chip: Chip) {
+        when (chip) {
+            binding.chipAll -> {
+                chip.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if (isChecked) {
+                        advancedSearchVM.type.value = TYPE_ALL
+                        buttonView.isClickable = false
+                    } else {
+                        buttonView.isClickable = true
+                    }
                 }
-                typeFilms.id -> {
-                    advancedSearchVM.type.value = "FILM"
-                    Log.d("MyTag", "ASF: type (FILM) ${advancedSearchVM.type.value}")
+            }
+            binding.chipFilms -> {
+                chip.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if (isChecked) {
+                        advancedSearchVM.type.value = TYPE_FILM
+                        buttonView.isClickable = false
+                    } else {
+                        buttonView.isClickable = true
+                    }
                 }
-                typeSerials.id -> {
-                    advancedSearchVM.type.value = "TV_SERIES"
-                    Log.d("MyTag", "ASF: type (SERIALS) ${advancedSearchVM.type.value}")
+            }
+            binding.chipSerials -> {
+                chip.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if (isChecked) {
+                        advancedSearchVM.type.value = TYPE_TV_SERIES
+                        buttonView.isClickable = false
+                    } else {
+                        buttonView.isClickable = true
+                    }
                 }
             }
         }
-        Log.d("MyTag", "ASF: type  ${advancedSearchVM.type.value}")
     }
 
-    private fun seekBarFromFunc(seekBar: SeekBar, textView: TextView) {
+    //Функция для сохранения значения поиска по типу и слушатель для Chip
+    private fun chipForOrder(chip: Chip) {
+        when (chip) {
+            binding.chipDate -> {
+                chip.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if (isChecked) {
+                        advancedSearchVM.type.value = ORDER_DATE
+                        buttonView.isClickable = false
+                    } else {
+                        buttonView.isClickable = true
+                    }
+                }
+            }
+            binding.chipPopular -> {
+                chip.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if (isChecked) {
+                        advancedSearchVM.type.value = ORDER_POPULAR
+                        buttonView.isClickable = false
+                    } else {
+                        buttonView.isClickable = true
+                    }
+                }
+            }
+            binding.chipRating -> {
+                chip.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if (isChecked) {
+                        advancedSearchVM.type.value = ORDER_RATING
+                        buttonView.isClickable = false
+                    } else {
+                        buttonView.isClickable = true
+                    }
+                }
+            }
+        }
+    }
+
+    //Функция для сохранения прогресса у seekBar для поиска по рейтингу и слушатель seekBar
+    private fun seekBarRatingFromTo(seekBar: SeekBar, textView: TextView) {
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             @SuppressLint("SetTextI18n")
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -117,13 +215,13 @@ class AdvancedSearchFragment : Fragment() {
                     binding.seekbarRatingFrom -> {
                         advancedSearchVM.ratingFrom.value = progress
                         textView.text =
-                            "с ${advancedSearchVM.ratingFrom.value ?: 0} до ${advancedSearchVM.ratingTo.value ?: 0}"
+                            "с ${advancedSearchVM.ratingFrom.value ?: ZERO} до ${advancedSearchVM.ratingTo.value ?: ZERO}"
                     }
 
                     else -> {
                         advancedSearchVM.ratingTo.value = progress
                         textView.text =
-                            "с ${advancedSearchVM.ratingFrom.value ?: 0} до ${advancedSearchVM.ratingTo.value ?: 0}"
+                            "с ${advancedSearchVM.ratingFrom.value ?: ZERO} до ${advancedSearchVM.ratingTo.value ?: ZERO}"
                     }
                 }
             }
@@ -136,5 +234,19 @@ class AdvancedSearchFragment : Fragment() {
                 // Do nothing
             }
         })
+    }
+
+    private companion object {
+        const val TYPE_ALL = "ALL"
+        const val TYPE_FILM = "FILM"
+        const val TYPE_TV_SERIES = "TV_SERIES"
+        const val COMEDY = "комедия"
+        const val RUSSIA = "Россия"
+        const val MIN_YEAR = 1900
+        const val ANY_RATING = "Любой"
+        const val ZERO = 0
+        const val ORDER_DATE = "YEAR"
+        const val ORDER_POPULAR = "NUM_VOTE"
+        const val ORDER_RATING = "RATING"
     }
 }

@@ -186,6 +186,13 @@
         app:layout_constraintEnd_toEndOf="@+id/chip_group_1"
         app:layout_constraintTop_toBottomOf="@+id/tv_choice_year" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/from_ru"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/seekbar_rating_from" />
+
     <SeekBar
         android:id="@+id/seekbar_rating_from"
         android:layout_width="match_parent"
@@ -194,6 +201,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title_rating" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/to_ru"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/seekbar_rating_to" />
 
     <SeekBar
         android:id="@+id/seekbar_rating_to"
@@ -217,7 +231,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:checkable="true"
+        app:singleSelection="true"
         android:theme="@style/Theme.MaterialComponents.Light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -227,6 +241,7 @@
             android:id="@+id/chip_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:text="@string/date_ru"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -236,6 +251,7 @@
             android:id="@+id/chip_popular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:text="@string/popular_ru"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/chip_all"
@@ -245,6 +261,7 @@
             android:id="@+id/chip_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:text="@string/rating_ru"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/chip_films"

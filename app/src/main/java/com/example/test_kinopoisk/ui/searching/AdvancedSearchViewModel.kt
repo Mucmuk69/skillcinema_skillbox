@@ -12,4 +12,5 @@ class AdvancedSearchViewModel : ViewModel() {
     var ratingFrom = MutableStateFlow<Int?>(null)
     var ratingTo = MutableStateFlow<Int?>(null)
     var type = MutableStateFlow<String?>(null)
+    var order = MutableStateFlow<String?>(null)
 }

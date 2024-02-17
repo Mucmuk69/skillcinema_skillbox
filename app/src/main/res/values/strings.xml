@@ -64,4 +64,6 @@
     <string name="show_ru">Показывать</string>
     <string name="period_ru">Период</string>
     <string name="choice_ru">Выбрать</string>
+    <string name="from_ru">С</string>
+    <string name="to_ru">До</string>
 </resources>
