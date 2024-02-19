@@ -14,7 +14,7 @@
         app:layout_constraintDimensionRatio="4:6"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="@string/staff_poster" />
+        android:contentDescription="@string/poster_staff_ru" />
 
     <TextView
         android:id="@+id/tv_name"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:textSize="18sp"
-        android:text="@string/name"
+        android:text="@string/name_ru"
         app:layout_constraintStart_toEndOf="@+id/iv_staff"
         app:layout_constraintTop_toTopOf="@+id/iv_staff"
         app:layout_constraintBottom_toBottomOf="@+id/iv_staff" />
@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:text="@string/profession"
+        android:text="@string/profession_ru"
         app:layout_constraintStart_toStartOf="@+id/tv_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 

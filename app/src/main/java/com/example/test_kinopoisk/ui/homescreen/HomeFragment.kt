@@ -41,14 +41,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        //При нажатии на значки навигации внизу экрана
-//        binding.navView.setOnItemSelectedListener {
-//            when (it.itemId) {
-//                R.id.navigation_home -> findNavController().navigate(R.id.navigation_home)
-//                R.id.navigation_searching -> findNavController().navigate(R.id.navigation_searching)
-//            }
-//            true
-//        }
 
         //Кнопка назад - свернуть приложение
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {

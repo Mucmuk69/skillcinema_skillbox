@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.Chip.Choice"
-            android:text="@string/All"
+            android:text="@string/All_ru"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.Chip.Choice"
-            android:text="@string/serial_ru"
+            android:text="@string/serials_ru"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/chip_films"
             app:layout_constraintTop_toTopOf="parent" />
@@ -182,7 +182,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:padding="10dp"
-        android:text="@string/any"
+        android:text="@string/any_ru"
         app:layout_constraintEnd_toEndOf="@+id/chip_group_1"
         app:layout_constraintTop_toBottomOf="@+id/tv_choice_year" />
 

@@ -26,7 +26,7 @@
                 android:id="@+id/iv_poster"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/movie_poster"
+                android:contentDescription="@string/movie_poster_ru"
                 android:scaleType="fitCenter"
                 tools:src="@tools:sample/avatars" />
 
@@ -57,7 +57,7 @@
                     android:layout_weight="1"
                     android:gravity="start"
                     android:padding="10dp"
-                    android:text="@string/seasons_and_episodes"
+                    android:text="@string/seasons_and_episodes_ru"
                     android:textSize="25sp" />
 
                 <TextView
@@ -71,7 +71,7 @@
                     android:focusable="true"
                     android:gravity="end"
                     android:padding="10dp"
-                    android:text="@string/All"
+                    android:text="@string/All_ru"
                     android:textColor="@color/purple_custom" />
 
             </LinearLayout>
@@ -89,7 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="@string/default_seasons"
+                    android:text="@string/default_seasons_ru"
                     android:textSize="17sp" />
 
                 <TextView
@@ -97,7 +97,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="@string/default_episodes"
+                    android:text="@string/default_episodes_ru"
                     android:textSize="17sp" />
 
             </LinearLayout>
@@ -116,7 +116,7 @@
                     android:layout_weight="1"
                     android:gravity="start"
                     android:padding="10dp"
-                    android:text="@string/the_film_was_shot" />
+                    android:text="@string/the_film_was_shot_ru" />
 
                 <TextView
                     android:id="@+id/tv_count_actors"
@@ -159,7 +159,7 @@
                     android:layout_weight="1"
                     android:gravity="start"
                     android:padding="10dp"
-                    android:text="@string/staff_in_movie" />
+                    android:text="@string/staff_in_movie_ru" />
 
                 <TextView
                     android:id="@+id/tv_count_staff"
@@ -203,7 +203,7 @@
                     android:layout_weight="1"
                     android:gravity="start"
                     android:padding="10dp"
-                    android:text="@string/gallery" />
+                    android:text="@string/gallery_ru" />
 
                 <TextView
                     android:id="@+id/tv_count_images"
@@ -246,7 +246,7 @@
                     android:layout_weight="1"
                     android:gravity="start"
                     android:padding="10dp"
-                    android:text="@string/similar_movies" />
+                    android:text="@string/similar_movies_ru" />
 
                 <TextView
                     android:id="@+id/tv_similar_films"

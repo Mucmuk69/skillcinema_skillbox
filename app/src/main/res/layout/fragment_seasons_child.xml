@@ -14,7 +14,7 @@
         android:layout_margin="5dp"
         android:padding="5dp"
         android:textSize="20sp"
-        android:text="@string/default_seasons"
+        android:text="@string/default_seasons_ru"
         app:layout_constraintVertical_bias="0.2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

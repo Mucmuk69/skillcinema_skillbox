@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars"
-        android:contentDescription="@string/film_poster" />
+        android:contentDescription="@string/movie_poster_ru" />
 
     <TextView
         android:id="@+id/title"
@@ -24,7 +24,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
-        android:text="@string/title"
+        android:text="@string/name_movie_ru"
         android:maxLines="2"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="@+id/poster"
@@ -37,7 +37,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
-        android:text="@string/genres"
+        android:text="@string/genre_ru"
         android:maxLines="1"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/poster"

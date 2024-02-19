@@ -14,7 +14,7 @@
         style="@style/TitleTextAppearance25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/test"
+        android:text="@string/actors_ru"
         android:layout_gravity="center"/>
 
     <androidx.recyclerview.widget.RecyclerView

@@ -15,14 +15,15 @@
         app:layout_constraintDimensionRatio="4:6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@tools:sample/avatars"
+        android:contentDescription="@string/movie_poster_ru" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
-        android:hint="@string/title"
+        android:hint="@string/name_movie_ru"
         android:maxLines="4"
         android:layout_marginStart="8dp"
         style="@style/TitleTextAppearance20"

@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:hint="@string/test"
+        android:text="@string/name_collection_ru"
         app:layout_constraintStart_toStartOf="@+id/recycler_parent"
         app:layout_constraintTop_toTopOf="@+id/recycler_parent" />
 
@@ -35,7 +35,7 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"
-        android:hint="@string/all"
+        android:text="@string/All_ru"
         app:layout_constraintEnd_toEndOf="@+id/recycler_parent"
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toEndOf="@+id/title_parent"

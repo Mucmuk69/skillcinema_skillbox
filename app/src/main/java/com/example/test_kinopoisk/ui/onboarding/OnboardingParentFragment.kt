@@ -1,6 +1,5 @@
 package com.example.test_kinopoisk.ui.onboarding
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,32 +29,18 @@ class OnboardingParentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
-        val isFirstRun = sharedPreferences.getBoolean(FIRST_RUN, true)
         val springDotsIndicator = binding.springDotsIndicator
-        val navController = findNavController()
-
-        if (isFirstRun) {
-            adapter = OnboardingAdapter(this)
-            viewPager = binding.pager
-            viewPager.adapter = adapter
-            springDotsIndicator.attachTo(viewPager)
-
-            val editor = sharedPreferences.edit()
-            editor.putBoolean(FIRST_RUN, false)
-            editor.apply()
-        } else {
-            navController.navigate(R.id.action_navigation_onboarding_to_navigation_dashboard)
-        }
         val buttonSkip = binding.buttonSkip
+
+        adapter = OnboardingAdapter(this)
+        viewPager = binding.pager
+        viewPager.adapter = adapter
+        springDotsIndicator.attachTo(viewPager)
+
         buttonSkip.isClickable = true
         buttonSkip.setOnClickListener {
-            navController.navigate(R.id.action_navigation_onboarding_to_navigation_dashboard)
+            findNavController().navigate(R.id.action_navigation_onboarding_to_navigation_loading_collections)
         }
-    }
-
-    private companion object {
-        const val FIRST_RUN = "isFirstRun"
     }
 }
 

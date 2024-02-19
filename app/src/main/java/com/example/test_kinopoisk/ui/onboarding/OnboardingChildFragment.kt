@@ -34,17 +34,17 @@ class OnboardingChild : Fragment() {
             when (getInt(ARG_OBJECT)) {
                 1 -> {
                     imageView.setImageResource(R.drawable.onboarding1_1)
-                    textView.setText(R.string.onboardind1)
+                    textView.setText(R.string.onboarding1_ru)
                 }
 
                 2 -> {
                     imageView.setImageResource(R.drawable.onboarding2_2)
-                    textView.setText(R.string.onboardind2)
+                    textView.setText(R.string.onboarding2_ru)
                 }
 
                 3 -> {
                     imageView.setImageResource(R.drawable.onboarding3_3)
-                    textView.setText(R.string.onboardind3)
+                    textView.setText(R.string.onboarding3_ru)
                 }
             }
         }

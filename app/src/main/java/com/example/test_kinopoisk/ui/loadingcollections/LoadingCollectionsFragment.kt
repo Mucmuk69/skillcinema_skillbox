@@ -1,5 +1,6 @@
 package com.example.test_kinopoisk.ui.loadingcollections
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,10 +21,12 @@ import com.example.test_kinopoisk.ui.homescreen.HomeFragment.Companion.ARG_SERIA
 import com.example.test_kinopoisk.ui.homescreen.HomeFragment.Companion.ARG_TOP250_COUNT
 import com.example.test_kinopoisk.ui.loadingcollections.MoviePagingSourceDynamic.Companion.isLoadingDynamic
 import com.example.test_kinopoisk.ui.movieinfo.MovieInfoFragment
+import com.example.test_kinopoisk.ui.onboarding.OnboardingParentFragment
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
+private const val FIRST_RUN = "isFirstRun"
 class LoadingCollectionsFragment : Fragment() {
 
     private var _binding: FragmentLoadingCollectionsBinding? = null
@@ -44,9 +47,19 @@ class LoadingCollectionsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoadingCollectionsBinding.inflate(inflater, container, false)
+
+        //Если первый запуск после установки приложения.
+        //То переход на экран приветствия
+        val sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
+        val isFirstRun = sharedPreferences.getBoolean(FIRST_RUN, true)
+        if (isFirstRun) {
+            findNavController().navigate(R.id.action_navigation_loading_collections_to_navigation_onboarding)
+            val editor = sharedPreferences.edit()
+            editor.putBoolean(FIRST_RUN, false)
+            editor.apply()
+        }
+
         return binding.root
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

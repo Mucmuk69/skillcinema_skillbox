@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_onboarding">
+    app:startDestination="@+id/navigation_loading_collections">
 
     <fragment
         android:id="@+id/navigation_home"
@@ -24,11 +24,14 @@
     <fragment
         android:id="@+id/navigation_loading_collections"
         android:name="com.example.test_kinopoisk.ui.loadingcollections.LoadingCollectionsFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_search"
         tools:layout="@layout/fragment_loading_collections" >
         <action
             android:id="@+id/action_navigation_loading_collection_to_navigation_home"
             app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_navigation_loading_collections_to_navigation_onboarding"
+            app:destination="@id/navigation_onboarding" />
     </fragment>
 
     <fragment
@@ -36,7 +39,7 @@
         android:name="com.example.test_kinopoisk.ui.onboarding.OnboardingParentFragment"
         tools:layout="@layout/fragment_parent_onboarding">
         <action
-            android:id="@+id/action_navigation_onboarding_to_navigation_dashboard"
+            android:id="@+id/action_navigation_onboarding_to_navigation_loading_collections"
             app:destination="@id/navigation_loading_collections" />
     </fragment>
 
