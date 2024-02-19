@@ -32,12 +32,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.test_kinopoisk.ui.searching.SearchingFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_searching" />
-
-    <fragment
         android:id="@+id/navigation_onboarding"
         android:name="com.example.test_kinopoisk.ui.onboarding.OnboardingParentFragment"
         tools:layout="@layout/fragment_parent_onboarding">
@@ -193,6 +187,13 @@
         <action
             android:id="@+id/action_navigation_search_year_to_navigation_advanced_search"
             app:destination="@id/navigation_advanced_search" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_db"
+        android:name="com.example.test_kinopoisk.ui.database.DBFragment"
+        tools:layout="@layout/fragment_d_b">
+
     </fragment>
 
 </navigation>

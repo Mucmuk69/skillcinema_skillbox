@@ -70,4 +70,6 @@
     <string name="search_to">Искать в период до</string>
     <string name="search_ru">Искать</string>
     <string name="search_text_previous">Для начала поиска введите не менее 3-х символов</string>
+    <string name="home_ru">Домашняя</string>
+    <string name="user_ru">Пользователь</string>
 </resources>

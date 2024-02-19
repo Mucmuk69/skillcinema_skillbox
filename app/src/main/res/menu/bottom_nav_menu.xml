@@ -4,7 +4,7 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home" />
+        android:title="@string/home_ru" />
 
     <item
         android:id="@+id/navigation_searching"
@@ -12,8 +12,8 @@
         android:title="@string/search" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_db"
         android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_notifications" />
+        android:title="@string/user_ru" />
 
 </menu>
