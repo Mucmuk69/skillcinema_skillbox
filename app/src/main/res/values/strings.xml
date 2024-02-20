@@ -76,5 +76,10 @@
     <string name="collections_ru">Коллекции</string>
     <string name="create_collection_ru">Создать свою коллекцию</string>
     <string name="interesting_movies_ru">Вам было интересно</string>
+    <string name="icon_like_ru">Иконка - нравится</string>
+    <string name="icon_ready_to_view_ru">Иконка - хочу посмотреть</string>
+    <string name="icon_viewed_ru">Иконка - просмотрено</string>
+    <string name="icon_shared_ru">Иконка - поделиться</string>
+    <string name="icon_dots_ru">Иконка - три точки</string>
 
 </resources>

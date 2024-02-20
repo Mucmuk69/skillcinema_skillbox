@@ -35,7 +35,7 @@
             android:contentDescription="@string/icon_advanced_search_ru"
             android:scaleX="0.7"
             android:scaleY="0.8"
-            android:src="@drawable/advanced_search_24"
+            android:src="@drawable/ic_advanced_search"
             app:layout_constraintBottom_toBottomOf="@+id/sv_search"
             app:layout_constraintEnd_toEndOf="@+id/sv_search"
             app:layout_constraintHorizontal_bias="0.97"

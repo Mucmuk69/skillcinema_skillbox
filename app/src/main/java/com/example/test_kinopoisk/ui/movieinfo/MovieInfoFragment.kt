@@ -273,6 +273,26 @@ class MovieInfoFragment : Fragment() {
                 bundle
             )
         }
+        //Добавить фильм в коллекцию "Любимые"
+        binding.ivLike.setOnClickListener {
+            viewModel.addLikeMovie()
+        }
+        //Добавить фильм в коллекцию "Хочу посмотреть"
+        binding.ivReadyToView.setOnClickListener {
+            viewModel.addReadyToViewMovie()
+        }
+        //Добавить фильм в коллекцию "Просмотрены"
+        binding.ivViewed.setOnClickListener {
+            viewModel.addViewedMovie()
+        }
+        //Поделиться ссылкой на фильм
+        binding.ivShare.setOnClickListener {
+
+        }
+        //Прочее
+        binding.ivDots.setOnClickListener {
+
+        }
 
 //Раскрытие текста описания фильма при нажатии на него
         description.setOnClickListener {
@@ -306,7 +326,7 @@ class MovieInfoFragment : Fragment() {
 
     //Функция для передачи и получении id фильма
     companion object {
-         const val ARG_MOVIE_ID = "movieId"
+        const val ARG_MOVIE_ID = "movieId"
         fun newInstance(movieId: Int): MovieInfoFragment {
             val fragment = MovieInfoFragment()
             val args = Bundle()

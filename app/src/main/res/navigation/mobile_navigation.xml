@@ -41,6 +41,9 @@
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile">
 
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_movie_info"
+            app:destination="@id/navigation_movie_info" />
     </fragment>
 
     <fragment

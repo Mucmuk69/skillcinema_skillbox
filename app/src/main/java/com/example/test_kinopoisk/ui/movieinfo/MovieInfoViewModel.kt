@@ -14,12 +14,14 @@ import com.example.domain.usecase.ListStaffUseCase
 import com.example.domain.usecase.MovieImagesUseCase
 import com.example.domain.usecase.SerialSeasonsUseCase
 import com.example.domain.usecase.SimilarMoviesUseCase
+import com.example.test_kinopoisk.ui.database.MovieDao
+import com.example.test_kinopoisk.ui.database.MovieDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class MovieInfoViewModel private constructor() : ViewModel() {
+class MovieInfoViewModel private constructor(private val movieDao: MovieDao) : ViewModel() {
     private val repository = FilmDataInterfaceImpl()
 
     private var _listFilmInfo = MutableStateFlow<List<FilmInfo>>(emptyList())
@@ -34,6 +36,8 @@ class MovieInfoViewModel private constructor() : ViewModel() {
     val serialSeasons = _serialSeasons.asStateFlow()
     private var _listSimilarMovies = MutableStateFlow<List<SimilarMovies>>(emptyList())
     val listSimilarMovies = _listSimilarMovies.asStateFlow()
+    private var _movieDatabase = MutableStateFlow<List<MovieDatabase>>(emptyList())
+    val movieDatabase = _movieDatabase.asStateFlow()
 
     private var _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
@@ -157,6 +161,37 @@ class MovieInfoViewModel private constructor() : ViewModel() {
             }
         }
     }
+
+    fun addLikeMovie(movieDatabase: MovieDatabase) {
+        viewModelScope.launch {
+            if (movieDatabase.movieId == listFilmInfo.value[0].kinopoiskId) {
+                movieDao.delete(movieDatabase)
+            } else {
+                movieDao.insert(movieDatabase)
+            }
+        }
+    }
+
+    fun addReadyToViewMovie(movieDatabase: MovieDatabase) {
+        viewModelScope.launch {
+            if (movieDatabase.movieId == listFilmInfo.value[0].kinopoiskId) {
+                movieDao.delete(movieDatabase)
+            } else {
+                movieDao.insert(movieDatabase)
+            }
+        }
+    }
+
+    fun addViewedMovie(movieDatabase: MovieDatabase) {
+        viewModelScope.launch {
+            if (movieDatabase.movieId == listFilmInfo.value[0].kinopoiskId) {
+                movieDao.delete(movieDatabase)
+            } else {
+                movieDao.insert(movieDatabase)
+            }
+        }
+    }
+
 }
 
 //Актеры и другие для передачи в другой фрагмент
@@ -176,6 +211,6 @@ class SharedMovieImagesViewModel : ViewModel() {
     var movieImages = MutableStateFlow<List<MovieImages?>>(emptyList())
 }
 
-class SharedSimilarMoviesViewModel :ViewModel() {
+class SharedSimilarMoviesViewModel : ViewModel() {
     var similarAdapter = MutableStateFlow<List<SimilarMovies>>(emptyList())
 }

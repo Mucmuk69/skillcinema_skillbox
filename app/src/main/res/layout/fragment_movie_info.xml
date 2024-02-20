@@ -1,280 +1,335 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.movieinfo.MovieInfoFragment">
 
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scroll_v"
+    <LinearLayout
+        android:id="@+id/linear_l"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/linear_l"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/iv_poster"
                 android:layout_width="match_parent"
+                app:layout_constraintDimensionRatio="6:4"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/movie_poster_ru"
                 android:scaleType="fitCenter"
-                tools:src="@tools:sample/avatars" />
+                tools:src="@tools:sample/avatars"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageView
+                android:id="@+id/iv_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_like_border"
+                app:layout_constraintHorizontal_bias="0.3"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                app:layout_constraintStart_toStartOf="@+id/iv_poster"
+                app:layout_constraintEnd_toEndOf="@+id/iv_poster"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_poster"
+                android:contentDescription="@string/icon_like_ru" />
+
+            <ImageView
+                android:id="@+id/iv_ready_to_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_bookmark_border"
+                android:contentDescription="@string/icon_ready_to_view_ru"
+                app:layout_constraintStart_toEndOf="@+id/iv_like"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_poster"/>
+
+            <ImageView
+                android:id="@+id/iv_viewed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_visibility_off"
+                android:contentDescription="@string/icon_viewed_ru"
+                app:layout_constraintStart_toEndOf="@+id/iv_ready_to_view"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_poster"/>
+
+            <ImageView
+                android:id="@+id/iv_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_share"
+                android:contentDescription="@string/icon_shared_ru"
+                app:layout_constraintStart_toEndOf="@+id/iv_viewed"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_poster"/>
+
+            <ImageView
+                android:id="@+id/iv_dots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_dots_3"
+                android:contentDescription="@string/icon_dots_ru"
+                app:layout_constraintStart_toEndOf="@+id/iv_share"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_poster"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:ellipsize="end"
+            android:maxLines="5"
+            android:padding="10dp"
+            android:text="@string/lorem"
+            android:textSize="25sp" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_all_episodes1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
-                android:id="@+id/tv_description"
-                android:layout_width="match_parent"
+                style="@style/TitleTextAppearance25"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:ellipsize="end"
-                android:maxLines="5"
+                android:layout_weight="1"
+                android:gravity="start"
                 android:padding="10dp"
-                android:text="@string/lorem"
+                android:text="@string/seasons_and_episodes_ru"
                 android:textSize="25sp" />
 
-
-            <LinearLayout
-                android:id="@+id/ll_all_episodes1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    style="@style/TitleTextAppearance25"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="@string/seasons_and_episodes_ru"
-                    android:textSize="25sp" />
-
-                <TextView
-                    android:id="@+id/tv_all_episodes"
-                    style="@style/TitleTextAppearance20"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="0"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="end"
-                    android:padding="10dp"
-                    android:text="@string/All_ru"
-                    android:textColor="@color/purple_custom" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_all_episodes2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="5dp"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/tv_season"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="@string/default_seasons_ru"
-                    android:textSize="17sp" />
-
-                <TextView
-                    android:id="@+id/tv_episodes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="@string/default_episodes_ru"
-                    android:textSize="17sp" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/TitleTextAppearance25"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="@string/the_film_was_shot_ru" />
-
-                <TextView
-                    android:id="@+id/tv_count_actors"
-                    style="@style/TitleTextAppearance20"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="0"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="end"
-                    android:padding="10dp"
-                    android:text="@string/_0"
-                    android:textColor="@color/purple_custom" />
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_actors"
+            <TextView
+                android:id="@+id/tv_all_episodes"
+                style="@style/TitleTextAppearance20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:orientation="horizontal"
-                android:padding="5dp"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="4"
-                tools:listitem="@layout/staff_item" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/TitleTextAppearance25"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="@string/staff_in_movie_ru" />
-
-                <TextView
-                    android:id="@+id/tv_count_staff"
-                    style="@style/TitleTextAppearance20"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="0"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="end"
-                    android:padding="10dp"
-                    android:text="@string/_0"
-                    android:textColor="@color/purple_custom" />
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_staff"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:orientation="horizontal"
-                android:padding="5dp"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2"
-                tools:listitem="@layout/staff_item" />
-
-            <LinearLayout
-                android:id="@+id/ll_movie_images"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/TitleTextAppearance25"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="@string/gallery_ru" />
-
-                <TextView
-                    android:id="@+id/tv_count_images"
-                    style="@style/TitleTextAppearance20"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="0"
-                    android:gravity="end"
-                    android:padding="10dp"
-                    android:text="@string/_0"
-                    android:textColor="@color/purple_custom" />
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_movie_images"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_margin="5dp"
-                android:orientation="horizontal"
-                android:padding="5dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/movie_image_item" />
-
-
-            <LinearLayout
-                android:id="@+id/ll_similar_movies"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/TitleTextAppearance25"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:text="@string/similar_movies_ru" />
-
-                <TextView
-                    android:id="@+id/tv_similar_films"
-                    style="@style/TitleTextAppearance20"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="0"
-                    android:gravity="end"
-                    android:padding="10dp"
-                    android:text="@string/_0"
-                    android:visibility="gone"
-                    android:textColor="@color/purple_custom" />
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_similar_films"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:orientation="horizontal"
-                android:padding="5dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/movie_item" />
-
+                android:layout_weight="0"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="end"
+                android:padding="10dp"
+                android:text="@string/All_ru"
+                android:textColor="@color/purple_custom" />
 
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_all_episodes2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_season"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/default_seasons_ru"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/tv_episodes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/default_episodes_ru"
+                android:textSize="17sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TitleTextAppearance25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:padding="10dp"
+                android:text="@string/the_film_was_shot_ru" />
+
+            <TextView
+                android:id="@+id/tv_count_actors"
+                style="@style/TitleTextAppearance20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="0"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="end"
+                android:padding="10dp"
+                android:text="@string/_0"
+                android:textColor="@color/purple_custom" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_actors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="4"
+            tools:listitem="@layout/staff_item" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TitleTextAppearance25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:padding="10dp"
+                android:text="@string/staff_in_movie_ru" />
+
+            <TextView
+                android:id="@+id/tv_count_staff"
+                style="@style/TitleTextAppearance20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="0"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="end"
+                android:padding="10dp"
+                android:text="@string/_0"
+                android:textColor="@color/purple_custom" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_staff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            tools:listitem="@layout/staff_item" />
+
+        <LinearLayout
+            android:id="@+id/ll_movie_images"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/TitleTextAppearance25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:padding="10dp"
+                android:text="@string/gallery_ru" />
+
+            <TextView
+                android:id="@+id/tv_count_images"
+                style="@style/TitleTextAppearance20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="0"
+                android:gravity="end"
+                android:padding="10dp"
+                android:text="@string/_0"
+                android:textColor="@color/purple_custom" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_movie_images"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/movie_image_item" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_similar_movies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/TitleTextAppearance25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:padding="10dp"
+                android:text="@string/similar_movies_ru" />
+
+            <TextView
+                android:id="@+id/tv_similar_films"
+                style="@style/TitleTextAppearance20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="0"
+                android:gravity="end"
+                android:padding="10dp"
+                android:text="@string/_0"
+                android:textColor="@color/purple_custom"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_similar_films"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/movie_item" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
