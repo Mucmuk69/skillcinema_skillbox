@@ -9,7 +9,7 @@
         android:id="@+id/navigation_home"
         android:name="com.example.test_kinopoisk.ui.homescreen.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_navigation_home_to_navigation_movie_info"
             app:destination="@id/navigation_movie_info" />
@@ -17,15 +17,36 @@
             android:id="@+id/action_navigation_home_to_navigation_all_film"
             app:destination="@id/navigation_all_film_in_collection" />
         <action
-            android:id="@+id/action_navigation_home_to_navigation_dashboard"
+            android:id="@+id/action_navigation_home_to_navigation_loading_collections"
             app:destination="@id/navigation_loading_collections" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_searching"
+        android:name="com.example.test_kinopoisk.ui.searching.SearchingFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_searching">
+
+        <action
+            android:id="@+id/action_navigation_searching_to_navigation_movie_info"
+            app:destination="@id/navigation_movie_info" />
+        <action
+            android:id="@+id/action_navigation_searching_to_navigation_advanced_search"
+            app:destination="@id/navigation_advanced_search" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.test_kinopoisk.ui.database.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile">
+
     </fragment>
 
     <fragment
         android:id="@+id/navigation_loading_collections"
         android:name="com.example.test_kinopoisk.ui.loadingcollections.LoadingCollectionsFragment"
-        android:label="@string/title_search"
-        tools:layout="@layout/fragment_loading_collections" >
+        tools:layout="@layout/fragment_loading_collections">
         <action
             android:id="@+id/action_navigation_loading_collection_to_navigation_home"
             app:destination="@id/navigation_home" />
@@ -131,19 +152,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_searching"
-        android:name="com.example.test_kinopoisk.ui.searching.SearchingFragment"
-        tools:layout="@layout/fragment_searching">
-
-        <action
-            android:id="@+id/action_navigation_searching_to_navigation_movie_info"
-            app:destination="@id/navigation_movie_info" />
-        <action
-            android:id="@+id/action_navigation_searching_to_navigation_advanced_search"
-            app:destination="@id/navigation_advanced_search" />
-    </fragment>
-
-    <fragment
         android:id="@+id/navigation_advanced_search"
         android:name="com.example.test_kinopoisk.ui.searching.AdvancedSearchFragment"
         tools:layout="@layout/fragment_advanced_search">
@@ -190,13 +198,6 @@
         <action
             android:id="@+id/action_navigation_search_year_to_navigation_advanced_search"
             app:destination="@id/navigation_advanced_search" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_db"
-        android:name="com.example.test_kinopoisk.ui.database.DBFragment"
-        tools:layout="@layout/fragment_d_b">
-
     </fragment>
 
 </navigation>

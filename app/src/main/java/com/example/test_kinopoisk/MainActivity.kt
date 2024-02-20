@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         //Вариант без кнопки Up
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_searching, R.id.navigation_db
+                R.id.navigation_home, R.id.navigation_searching, R.id.navigation_profile
             )
         )
 

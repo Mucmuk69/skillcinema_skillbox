@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">test_kinopoisk</string>
+    <string name="app_name">Skillcinema</string>
     <string name="title_home">Домашняя</string>
     <string name="title_search">Поиск</string>
-    <string name="title_user">Пользователь</string>
+    <string name="title_profile">Профиль</string>
     <string name="rating">10.0</string>
     <string name="_0">0</string>
     <string name="skillcinema">Skillcinema</string>
@@ -72,5 +72,9 @@
     <string name="icon_advanced_search_ru">Иконка расширенного поиска</string>
     <string name="name_collection_ru">Название коллекции</string>
     <string name="release_date_ru">Дата выхода</string>
+    <string name="viewed_ru">Просмотрено</string>
+    <string name="collections_ru">Коллекции</string>
+    <string name="create_collection_ru">Создать свою коллекцию</string>
+    <string name="interesting_movies_ru">Вам было интересно</string>
 
 </resources>

@@ -103,7 +103,7 @@ class HomeFragment : Fragment() {
     private fun refreshData() {
         lifecycleScope.launch {
             findNavController().navigate(
-                R.id.action_navigation_home_to_navigation_dashboard
+                R.id.action_navigation_home_to_navigation_loading_collections
             )
             swipeRefreshLayout.isRefreshing = false
         }
