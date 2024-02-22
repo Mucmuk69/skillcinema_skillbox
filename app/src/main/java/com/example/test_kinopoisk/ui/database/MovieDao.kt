@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.example.domain.entity.MovieDB
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -19,8 +20,8 @@ interface MovieDao {
     fun getAllReadyToView(): Flow<List<MovieDatabase>>
 
     @Insert
-    suspend fun insert(movieDatabase: MovieDatabase)
+    suspend fun insert(movie: MovieDB)
 
     @Delete
-    suspend fun delete(movieDatabase: MovieDatabase)
+    suspend fun delete(movie: MovieDB)
 }

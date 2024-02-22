@@ -11,10 +11,11 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        db = Room.databaseBuilder(
+        db = Room.inMemoryDatabaseBuilder(
             applicationContext,
-            AppDatabase::class.java,
-            "db"
-        ).build()
+            AppDatabase::class.java
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 }

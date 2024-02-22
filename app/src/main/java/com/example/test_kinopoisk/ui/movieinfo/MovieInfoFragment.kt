@@ -1,5 +1,6 @@
 package com.example.test_kinopoisk.ui.movieinfo
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -285,11 +286,23 @@ class MovieInfoFragment : Fragment() {
         binding.ivViewed.setOnClickListener {
             viewModel.addViewedMovie()
         }
+
         //Поделиться ссылкой на фильм
         binding.ivShare.setOnClickListener {
-
+            lifecycleScope.launch {
+                viewModel.movieDatabase.collect { listMovie ->
+                    val webUrl = listMovie[0].webUrl
+                    val sendIntent: Intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_TEXT, webUrl)
+                        type = "text/plain"
+                    }
+                    val shareIntent = Intent.createChooser(sendIntent, null)
+                    startActivity(shareIntent)
+                }
+            }
         }
-        //Прочее
+        //Добавить в свою коллекцию\создать свою коллекцию
         binding.ivDots.setOnClickListener {
 
         }
