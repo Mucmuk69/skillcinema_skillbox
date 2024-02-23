@@ -15,16 +15,9 @@ data class MovieDatabase(
     @ColumnInfo(name = "name_en")
     var nameEn: String?,
     @ColumnInfo(name = "poster_url")
-    var posterUrl: String?,
-    @ColumnInfo(name = "web_url")
-    var webUrl: String?,
-    @ColumnInfo(name = "like")
-    var like: Boolean?,
-    @ColumnInfo(name = "viewed")
-    var viewed: Boolean?,
-    @ColumnInfo(name = "ready_to_view")
-    var readyToView: Boolean?
+    var posterUrl: String?
 )
+
 
 object MovieDBMapper {
     fun mapToMovieDB(movieDatabase: MovieDatabase): MovieDB {
@@ -32,11 +25,7 @@ object MovieDBMapper {
             movieDatabase.movieId,
             movieDatabase.nameRu,
             movieDatabase.nameEn,
-            movieDatabase.posterUrl,
-            movieDatabase.webUrl,
-            movieDatabase.like,
-            movieDatabase.viewed,
-            movieDatabase.readyToView
+            movieDatabase.posterUrl
         )
     }
 }

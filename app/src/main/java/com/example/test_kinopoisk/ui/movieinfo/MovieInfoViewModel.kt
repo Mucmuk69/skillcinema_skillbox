@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.FilmDataInterfaceImpl
+import com.example.domain.DatabaseMovie
 import com.example.domain.entity.data_model_images.MovieImages
 import com.example.domain.entity.data_model_movie_info.FilmInfo
 import com.example.domain.entity.data_model_serial_seasons.Seasons
@@ -11,19 +12,19 @@ import com.example.domain.entity.data_model_similar_movies.SimilarMovies
 import com.example.domain.entity.data_model_staff.ListStaff
 import com.example.domain.usecase.FilmInfoUseCase
 import com.example.domain.usecase.ListStaffUseCase
-import com.example.domain.usecase.MovieDBUseCase
 import com.example.domain.usecase.MovieImagesUseCase
 import com.example.domain.usecase.SerialSeasonsUseCase
 import com.example.domain.usecase.SimilarMoviesUseCase
 import com.example.test_kinopoisk.ui.database.DatabaseMovieImpl
 import com.example.test_kinopoisk.ui.database.MovieDao
-import com.example.test_kinopoisk.ui.database.MovieDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class MovieInfoViewModel private constructor(private val movieDao: MovieDao) : ViewModel() {
+class MovieInfoViewModel private constructor() : ViewModel() {
     private val repository = FilmDataInterfaceImpl()
 
     private var _listFilmInfo = MutableStateFlow<List<FilmInfo>>(emptyList())
@@ -38,10 +39,9 @@ class MovieInfoViewModel private constructor(private val movieDao: MovieDao) : V
     val serialSeasons = _serialSeasons.asStateFlow()
     private var _listSimilarMovies = MutableStateFlow<List<SimilarMovies>>(emptyList())
     val listSimilarMovies = _listSimilarMovies.asStateFlow()
-    private var _movieDatabase = MutableStateFlow<List<MovieDatabase>>(emptyList())
-    val movieDatabase = _movieDatabase.asStateFlow()
-    private val repositoryDB = DatabaseMovieImpl(movieDatabase.value[0])
-    private val movieDBUseCase = MovieDBUseCase(repositoryDB)
+
+//    private var repositoryDB = DatabaseMovieImpl(allMovies.value[0])
+//    private var movieDBUseCase = MovieDBUseCase(repositoryDB)
 
     private var _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
@@ -59,6 +59,27 @@ class MovieInfoViewModel private constructor(private val movieDao: MovieDao) : V
     private val serialSeasonsUseCase = SerialSeasonsUseCase(repository)
     private val movieImagesUseCase = MovieImagesUseCase(repository)
     private val similarMoviesUseCase = SimilarMoviesUseCase(repository)
+
+//    init {
+//        viewModelScope.launch {
+//            isLoading.collect { loading ->
+//                if (loading) {
+//                    listFilmInfo.collect { filmInfo ->
+//                        allMovies.value[0].movieId = filmInfo[0].kinopoiskId
+//                        allMovies.value[0].nameRu = filmInfo[0].nameRu
+//                        allMovies.value[0].nameEn = filmInfo[0].nameEn
+//                        allMovies.value[0].posterUrl = filmInfo[0].posterUrl
+//                    }
+//                }
+//            }
+//        }
+//    }
+//    private val allMovies = this.movieDao.getAllMovies()
+//        .stateIn(
+//            scope = viewModelScope,
+//            started = SharingStarted.WhileSubscribed(5_000L),
+//            initialValue = emptyList()
+//        )
 
     //Получение инфо о фильме по id
     fun getFilmInfo(movieId: Int) {
@@ -80,14 +101,6 @@ class MovieInfoViewModel private constructor(private val movieDao: MovieDao) : V
                         _listFilmInfo.value = listOf(it)
                         Log.d("MyTag", "MIVM: filmInfo -  $it")
                         _isLoading.value = true
-                        _movieDatabase.value[0].movieId = _listFilmInfo.value[0].kinopoiskId
-                        _movieDatabase.value[0].nameRu = _listFilmInfo.value[0].nameRu
-                        _movieDatabase.value[0].nameEn = _listFilmInfo.value[0].nameEn
-                        _movieDatabase.value[0].posterUrl = _listFilmInfo.value[0].posterUrl
-                        _movieDatabase.value[0].webUrl = _listFilmInfo.value[0].webUrl
-                        _movieDatabase.value[0].like = false
-                        _movieDatabase.value[0].viewed = false
-                        _movieDatabase.value[0].readyToView = false
                     },
                     onFailure = {
                         Log.d("MyTag", "MIVM-error:  ${it.message}")
@@ -174,42 +187,15 @@ class MovieInfoViewModel private constructor(private val movieDao: MovieDao) : V
         }
     }
 
-    fun addLikeMovie() {
-        viewModelScope.launch {
-            if (_movieDatabase.value[0].like == true) {
-                _movieDatabase.value[0].like = false
-                movieDao.delete(movieDBUseCase.execute())
-            } else {
-                _movieDatabase.value[0].like = true
-                movieDao.insert(movieDBUseCase.execute())
-            }
-        }
+    fun addMovie() {
+//        viewModelScope.launch {
+//            if (allMovies.value[0].movieId == listFilmInfo.value[0].kinopoiskId) {
+//                movieDao.delete(allMovies.value[0])
+//            } else {
+//                movieDao.insert(allMovies.value[0])
+//            }
+//        }
     }
-
-    fun addReadyToViewMovie() {
-        viewModelScope.launch {
-            if (_movieDatabase.value[0].readyToView == true) {
-                _movieDatabase.value[0].readyToView = false
-                movieDao.delete(movieDBUseCase.execute())
-            } else {
-                _movieDatabase.value[0].readyToView = true
-                movieDao.insert(movieDBUseCase.execute())
-            }
-        }
-    }
-
-    fun addViewedMovie() {
-        viewModelScope.launch {
-            if (_movieDatabase.value[0].viewed == true) {
-                _movieDatabase.value[0].viewed = false
-                movieDao.delete(movieDBUseCase.execute())
-            } else {
-                _movieDatabase.value[0].viewed = true
-                movieDao.insert(movieDBUseCase.execute())
-            }
-        }
-    }
-
 }
 
 //Актеры и другие для передачи в другой фрагмент

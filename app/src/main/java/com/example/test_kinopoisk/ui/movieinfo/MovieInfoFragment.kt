@@ -274,24 +274,25 @@ class MovieInfoFragment : Fragment() {
                 bundle
             )
         }
+
         //Добавить фильм в коллекцию "Любимые"
         binding.ivLike.setOnClickListener {
-            viewModel.addLikeMovie()
+            viewModel.addMovie()
         }
         //Добавить фильм в коллекцию "Хочу посмотреть"
         binding.ivReadyToView.setOnClickListener {
-            viewModel.addReadyToViewMovie()
+
         }
         //Добавить фильм в коллекцию "Просмотрены"
         binding.ivViewed.setOnClickListener {
-            viewModel.addViewedMovie()
+
         }
 
         //Поделиться ссылкой на фильм
         binding.ivShare.setOnClickListener {
             lifecycleScope.launch {
-                viewModel.movieDatabase.collect { listMovie ->
-                    val webUrl = listMovie[0].webUrl
+                viewModel.listFilmInfo.collect { filmInfo ->
+                    val webUrl = filmInfo[0].webUrl
                     val sendIntent: Intent = Intent().apply {
                         action = Intent.ACTION_SEND
                         putExtra(Intent.EXTRA_TEXT, webUrl)

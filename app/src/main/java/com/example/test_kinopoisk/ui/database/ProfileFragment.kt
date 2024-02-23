@@ -41,7 +41,7 @@ class ProfileFragment : Fragment() {
     //Клик по фильму, переход к инфо о фильме
     private fun onMovieClick(movie: MovieDatabase) {
         val movieId = movie.movieId
-        val movieInfoFragment = MovieInfoFragment.newInstance(movieId = movieId)
+        val movieInfoFragment = MovieInfoFragment.newInstance(movieId = movieId!!)
         val currentDestination = findNavController().currentDestination
         if (currentDestination?.id == R.id.navigation_profile) {
             findNavController().navigate(
