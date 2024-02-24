@@ -50,6 +50,8 @@ class MovieInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initDB()
+
         binding.recyclerActors.adapter = listActorsAdapter
         binding.recyclerStaff.adapter = listStaffAdapter
         binding.recyclerMovieImages.adapter = movieImagesAdapter
@@ -277,7 +279,7 @@ class MovieInfoFragment : Fragment() {
 
         //Добавить фильм в коллекцию "Любимые"
         binding.ivLike.setOnClickListener {
-            viewModel.addMovie()
+            viewModel.insertMovie(binding.ivLike){}
         }
         //Добавить фильм в коллекцию "Хочу посмотреть"
         binding.ivReadyToView.setOnClickListener {
@@ -312,6 +314,13 @@ class MovieInfoFragment : Fragment() {
         description.setOnClickListener {
             expandText(description)
         }
+    }
+
+    private fun initDB() {
+        viewModel.initDatabase()
+//        viewModel.getAllCollections().observe(viewLifecycleOwner) { listMovies ->
+//
+//        }
     }
 
     //Клик по актеру, переход к инфо об актере

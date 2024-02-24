@@ -1,9 +1,14 @@
 package com.example.test_kinopoisk.ui.database
 
-import kotlinx.coroutines.flow.Flow
+import androidx.lifecycle.LiveData
+import com.example.test_kinopoisk.ui.database.model.FilmInfo
+import com.example.test_kinopoisk.ui.database.model.MovieDBModel
 
 interface MovieRepo {
-    fun getAllMovies(): Flow<List<MovieDatabase>>
-    suspend fun insert(movie: MovieDatabase, onSuccess: () -> Unit)
-    suspend fun delete(movie: MovieDatabase, onSuccess: () -> Unit)
+    fun getAllCollections(): LiveData<List<MovieDBModel>>
+    fun getAllMovies(): LiveData<List<FilmInfo>>
+    suspend fun insertCollection(collection: MovieDBModel, onSuccess: () -> Unit)
+    suspend fun insertMovie(movie: FilmInfo, onSuccess: () -> Unit)
+    suspend fun deleteCollection(collection: MovieDBModel, onSuccess: () -> Unit)
+    suspend fun deleteMovie(movie: FilmInfo, onSuccess: () -> Unit)
 }

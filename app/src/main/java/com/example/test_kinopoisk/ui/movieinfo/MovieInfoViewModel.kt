@@ -1,10 +1,14 @@
 package com.example.test_kinopoisk.ui.movieinfo
 
+import android.app.Application
 import android.util.Log
+import android.widget.ImageView
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.FilmDataInterfaceImpl
-import com.example.domain.DatabaseMovie
 import com.example.domain.entity.data_model_images.MovieImages
 import com.example.domain.entity.data_model_movie_info.FilmInfo
 import com.example.domain.entity.data_model_serial_seasons.Seasons
@@ -15,16 +19,18 @@ import com.example.domain.usecase.ListStaffUseCase
 import com.example.domain.usecase.MovieImagesUseCase
 import com.example.domain.usecase.SerialSeasonsUseCase
 import com.example.domain.usecase.SimilarMoviesUseCase
-import com.example.test_kinopoisk.ui.database.DatabaseMovieImpl
-import com.example.test_kinopoisk.ui.database.MovieDao
+import com.example.test_kinopoisk.R
+import com.example.test_kinopoisk.REPO
+import com.example.test_kinopoisk.ui.database.AppDatabase
+import com.example.test_kinopoisk.ui.database.MovieRepoImpl
+import com.example.test_kinopoisk.ui.database.model.MovieDBModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.launch
 
-class MovieInfoViewModel private constructor() : ViewModel() {
+class MovieInfoViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = FilmDataInterfaceImpl()
 
     private var _listFilmInfo = MutableStateFlow<List<FilmInfo>>(emptyList())
@@ -39,9 +45,6 @@ class MovieInfoViewModel private constructor() : ViewModel() {
     val serialSeasons = _serialSeasons.asStateFlow()
     private var _listSimilarMovies = MutableStateFlow<List<SimilarMovies>>(emptyList())
     val listSimilarMovies = _listSimilarMovies.asStateFlow()
-
-//    private var repositoryDB = DatabaseMovieImpl(allMovies.value[0])
-//    private var movieDBUseCase = MovieDBUseCase(repositoryDB)
 
     private var _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
@@ -59,27 +62,6 @@ class MovieInfoViewModel private constructor() : ViewModel() {
     private val serialSeasonsUseCase = SerialSeasonsUseCase(repository)
     private val movieImagesUseCase = MovieImagesUseCase(repository)
     private val similarMoviesUseCase = SimilarMoviesUseCase(repository)
-
-//    init {
-//        viewModelScope.launch {
-//            isLoading.collect { loading ->
-//                if (loading) {
-//                    listFilmInfo.collect { filmInfo ->
-//                        allMovies.value[0].movieId = filmInfo[0].kinopoiskId
-//                        allMovies.value[0].nameRu = filmInfo[0].nameRu
-//                        allMovies.value[0].nameEn = filmInfo[0].nameEn
-//                        allMovies.value[0].posterUrl = filmInfo[0].posterUrl
-//                    }
-//                }
-//            }
-//        }
-//    }
-//    private val allMovies = this.movieDao.getAllMovies()
-//        .stateIn(
-//            scope = viewModelScope,
-//            started = SharingStarted.WhileSubscribed(5_000L),
-//            initialValue = emptyList()
-//        )
 
     //Получение инфо о фильме по id
     fun getFilmInfo(movieId: Int) {
@@ -187,14 +169,56 @@ class MovieInfoViewModel private constructor() : ViewModel() {
         }
     }
 
-    fun addMovie() {
-//        viewModelScope.launch {
-//            if (allMovies.value[0].movieId == listFilmInfo.value[0].kinopoiskId) {
-//                movieDao.delete(allMovies.value[0])
-//            } else {
-//                movieDao.insert(allMovies.value[0])
-//            }
-//        }
+    private val context = application
+    fun initDatabase() {
+        REPO = MovieRepoImpl(AppDatabase.getInstance(context).movieDao())
+    }
+
+    fun getAllCollections(): LiveData<List<MovieDBModel>> {
+        return REPO.getAllCollections()
+    }
+
+    private fun getAllMovie(): LiveData<List<com.example.test_kinopoisk.ui.database.model.FilmInfo>> {
+        return REPO.getAllMovies()
+    }
+
+
+    fun insertMovie(
+        imageView:ImageView,
+        onSuccess: () -> Unit
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            listFilmInfo.collect { filmInfo ->
+                if (getAllMovie().value?.any { it.movieId != filmInfo[0].kinopoiskId } == false) {
+                    val drawable = ContextCompat.getDrawable(context, R.drawable.ic_like)
+                    imageView.setImageDrawable(drawable)
+                    REPO.insertMovie(
+                        com.example.test_kinopoisk.ui.database.model.FilmInfo(
+                            movieId = filmInfo[0].kinopoiskId,
+                            nameRu = filmInfo[0].nameRu,
+                            nameEn = filmInfo[0].nameEn,
+                            posterUrl = filmInfo[0].posterUrl
+                        )
+                    ) {
+                        onSuccess()
+                    }
+                } else {
+                    val drawable = ContextCompat.getDrawable(context, R.drawable.ic_like_border)
+                    imageView.setImageDrawable(drawable)
+                    REPO.deleteMovie(
+                        com.example.test_kinopoisk.ui.database.model.FilmInfo(
+                            movieId = filmInfo[0].kinopoiskId,
+                            nameRu = filmInfo[0].nameRu,
+                            nameEn = filmInfo[0].nameEn,
+                            posterUrl = filmInfo[0].posterUrl
+                        )
+                    ) {
+                        onSuccess()
+                    }
+                }
+
+            }
+        }
     }
 }
 

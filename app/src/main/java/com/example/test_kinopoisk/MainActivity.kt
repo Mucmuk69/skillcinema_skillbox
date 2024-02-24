@@ -17,6 +17,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         this.findViewById<View>(android.R.id.content).rootView
 
+        APP = this
+
         //Панель инструментов.
         //Установите панель инструментов в качестве панели действий для этого окна действий
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)

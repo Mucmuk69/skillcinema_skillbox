@@ -1,19 +1,36 @@
 package com.example.test_kinopoisk.ui.database
 
-import kotlinx.coroutines.flow.Flow
+import androidx.lifecycle.LiveData
+import com.example.test_kinopoisk.ui.database.model.FilmInfo
+import com.example.test_kinopoisk.ui.database.model.MovieDBModel
 
 class MovieRepoImpl(private val movieDao: MovieDao) : MovieRepo {
-    override fun getAllMovies(): Flow<List<MovieDatabase>> {
+
+    override fun getAllCollections(): LiveData<List<MovieDBModel>> {
+        return movieDao.getAllCollections()
+    }
+
+    override fun getAllMovies(): LiveData<List<FilmInfo>> {
         return movieDao.getAllMovies()
     }
 
-    override suspend fun insert(movie: MovieDatabase, onSuccess: () -> Unit) {
-        movieDao.insert(movie)
+    override suspend fun insertCollection(collection: MovieDBModel, onSuccess: () -> Unit) {
+        movieDao.insertCollection(collection)
         onSuccess()
     }
 
-    override suspend fun delete(movie: MovieDatabase, onSuccess: () -> Unit) {
-        movieDao.delete(movie)
+    override suspend fun insertMovie(movie: FilmInfo, onSuccess: () -> Unit) {
+        movieDao.insertMovie(movie)
+        onSuccess()
+    }
+
+    override suspend fun deleteCollection(collection: MovieDBModel, onSuccess: () -> Unit) {
+        movieDao.deleteCollection(collection)
+        onSuccess()
+    }
+
+    override suspend fun deleteMovie(movie: FilmInfo, onSuccess: () -> Unit) {
+        movieDao.deleteMovie(movie)
         onSuccess()
     }
 }

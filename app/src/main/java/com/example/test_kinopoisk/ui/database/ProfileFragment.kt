@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.domain.entity.data_model_similar_movies.Item
 import com.example.test_kinopoisk.App
 import com.example.test_kinopoisk.R
 import com.example.test_kinopoisk.databinding.FragmentProfileBinding
+import com.example.test_kinopoisk.ui.database.model.MovieDatabase
 import com.example.test_kinopoisk.ui.movieinfo.MovieInfoFragment
 
 class ProfileFragment : Fragment() {
