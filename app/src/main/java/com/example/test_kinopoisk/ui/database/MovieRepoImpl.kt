@@ -1,11 +1,11 @@
 package com.example.test_kinopoisk.ui.database
 
-import androidx.lifecycle.LiveData
 import com.example.test_kinopoisk.ui.database.model.MovieDBModel
+import kotlinx.coroutines.flow.Flow
 
 class MovieRepoImpl(private val movieDao: MovieDao) : MovieRepo {
 
-    override fun getAllMovies(): LiveData<List<MovieDBModel>> {
+    override fun getAllMovies(): Flow<List<MovieDBModel>> {
         return movieDao.getAllMovies()
     }
 

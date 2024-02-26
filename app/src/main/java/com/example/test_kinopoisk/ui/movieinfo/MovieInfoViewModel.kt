@@ -5,7 +5,6 @@ import android.util.Log
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.FilmDataInterfaceImpl
@@ -23,12 +22,14 @@ import com.example.test_kinopoisk.R
 import com.example.test_kinopoisk.REPO
 import com.example.test_kinopoisk.ui.database.AppDatabase
 import com.example.test_kinopoisk.ui.database.MovieRepoImpl
-import com.example.test_kinopoisk.ui.database.model.FilmInfoDB
 import com.example.test_kinopoisk.ui.database.model.MovieDBModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.forEach
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class MovieInfoViewModel(application: Application) : AndroidViewModel(application) {
@@ -46,7 +47,6 @@ class MovieInfoViewModel(application: Application) : AndroidViewModel(applicatio
     val serialSeasons = _serialSeasons.asStateFlow()
     private var _listSimilarMovies = MutableStateFlow<List<SimilarMovies>>(emptyList())
     val listSimilarMovies = _listSimilarMovies.asStateFlow()
-    private var filmInfoDB = MutableStateFlow<List<FilmInfoDB>>(emptyList())
 
     private var _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
@@ -176,7 +176,7 @@ class MovieInfoViewModel(application: Application) : AndroidViewModel(applicatio
         REPO = MovieRepoImpl(AppDatabase.getInstance(context).movieDao())
     }
 
-    private fun getAllMovies(): LiveData<List<MovieDBModel>> {
+    fun getAllMovies(): Flow<List<MovieDBModel>> {
         return REPO.getAllMovies()
     }
 
@@ -184,45 +184,42 @@ class MovieInfoViewModel(application: Application) : AndroidViewModel(applicatio
         imageView: ImageView,
         onSuccess: () -> Unit
     ) {
-        viewModelScope.launch(Dispatchers.IO) {
-            isLoading.collect { loading ->
-                if (loading) {
-                    listFilmInfo.collect { filmInfo ->
-                            if (getAllMovies().value?.any { it.filmInfo.movieId != filmInfo[0].kinopoiskId } == false) {
-                                val drawable =
-                                    ContextCompat.getDrawable(context, R.drawable.ic_like)
-                                imageView.setImageDrawable(drawable)
-                                filmInfoDB.value[0].movieId = filmInfo[0].kinopoiskId
-                                filmInfoDB.value[0].nameRu = filmInfo[0].nameRu
-                                filmInfoDB.value[0].nameEn = filmInfo[0].nameEn
-                                filmInfoDB.value[0].posterUrl = filmInfo[0].posterUrl
-                                REPO.insertMovie(
-                                    MovieDBModel(
-                                        titleCollection = "like",
-                                        filmInfo = filmInfoDB.value[0]
-                                    )
-                                ) {
-                                    onSuccess()
-                                }
-                            } else {
-                                val drawable =
-                                    ContextCompat.getDrawable(context, R.drawable.ic_like_border)
-                                imageView.setImageDrawable(drawable)
-                                filmInfoDB.value[0].movieId = filmInfo[0].kinopoiskId
-                                filmInfoDB.value[0].nameRu = filmInfo[0].nameRu
-                                filmInfoDB.value[0].nameEn = filmInfo[0].nameEn
-                                filmInfoDB.value[0].posterUrl = filmInfo[0].posterUrl
-                                REPO.deleteMovie(
-                                    MovieDBModel(
-                                        titleCollection = "like",
-                                        filmInfo = filmInfoDB.value[0]
-                                    )
-                                ) {
-                                    onSuccess()
-                                }
-                            }
-                    }
-                }
+        viewModelScope.launch {
+            val drawable =
+                ContextCompat.getDrawable(context, R.drawable.ic_like)
+            imageView.setImageDrawable(drawable)
+            REPO.insertMovie(
+                MovieDBModel(
+                    titleCollection = "like",
+                    movieId = listFilmInfo.value[0].kinopoiskId!!,
+                    nameRu = listFilmInfo.value[0].nameRu ?: listFilmInfo.value[0].nameEn ?: "",
+                    nameEn = listFilmInfo.value[0].nameEn ?: listFilmInfo.value[0].nameRu ?: "",
+                    posterUrl = listFilmInfo.value[0].posterUrl!!
+                )
+            ) {
+                onSuccess()
+            }
+        }
+    }
+
+    fun deleteMovie(
+        imageView: ImageView,
+        onSuccess: () -> Unit
+    ) {
+        viewModelScope.launch {
+            val drawable =
+                ContextCompat.getDrawable(context, R.drawable.ic_like_border)
+            imageView.setImageDrawable(drawable)
+            REPO.deleteMovie(
+                MovieDBModel(
+                    titleCollection = "like",
+                    movieId = listFilmInfo.value[0].kinopoiskId!!,
+                    nameRu = listFilmInfo.value[0].nameRu ?: listFilmInfo.value[0].nameEn ?: "",
+                    nameEn = listFilmInfo.value[0].nameEn ?: listFilmInfo.value[0].nameRu ?: "",
+                    posterUrl = listFilmInfo.value[0].posterUrl!!
+                )
+            ) {
+                onSuccess()
             }
         }
     }

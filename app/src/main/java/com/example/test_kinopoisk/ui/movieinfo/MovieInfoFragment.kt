@@ -276,10 +276,16 @@ class MovieInfoFragment : Fragment() {
                 bundle
             )
         }
-
+        var isFavorite = false
         //Добавить фильм в коллекцию "Любимые"
         binding.ivLike.setOnClickListener {
-            viewModel.insertMovie(binding.ivLike){}
+            isFavorite = if (!isFavorite) {
+                viewModel.insertMovie(binding.ivLike) {}
+                true
+            } else {
+                viewModel.deleteMovie(binding.ivLike) {}
+                false
+            }
         }
         //Добавить фильм в коллекцию "Хочу посмотреть"
         binding.ivReadyToView.setOnClickListener {
@@ -318,9 +324,6 @@ class MovieInfoFragment : Fragment() {
 
     private fun initDB() {
         viewModel.initDatabase()
-//        viewModel.getAllCollections().observe(viewLifecycleOwner) { listMovies ->
-//
-//        }
     }
 
     //Клик по актеру, переход к инфо об актере
