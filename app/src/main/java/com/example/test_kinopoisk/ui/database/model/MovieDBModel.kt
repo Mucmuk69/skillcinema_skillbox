@@ -4,20 +4,18 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import org.jetbrains.annotations.NotNull
 
 @Entity(tableName = "movie")
 data class MovieDBModel(
     @PrimaryKey(autoGenerate = true)
-    var id: Int?,
+    var id: Int = 0,
     @ColumnInfo(name = "title")
     var titleCollection: String?,
     @Embedded
-    var filmInfo: FilmInfo,
+    var filmInfo: FilmInfoDB
 )
 
-data class FilmInfo(
-    @PrimaryKey
+data class FilmInfoDB(
     @ColumnInfo(name = "movie_id")
     var movieId: Int?,
     @ColumnInfo(name = "name_ru")

@@ -23,6 +23,7 @@ import com.example.test_kinopoisk.R
 import com.example.test_kinopoisk.REPO
 import com.example.test_kinopoisk.ui.database.AppDatabase
 import com.example.test_kinopoisk.ui.database.MovieRepoImpl
+import com.example.test_kinopoisk.ui.database.model.FilmInfoDB
 import com.example.test_kinopoisk.ui.database.model.MovieDBModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -45,6 +46,7 @@ class MovieInfoViewModel(application: Application) : AndroidViewModel(applicatio
     val serialSeasons = _serialSeasons.asStateFlow()
     private var _listSimilarMovies = MutableStateFlow<List<SimilarMovies>>(emptyList())
     val listSimilarMovies = _listSimilarMovies.asStateFlow()
+    private var filmInfoDB = MutableStateFlow<List<FilmInfoDB>>(emptyList())
 
     private var _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
@@ -174,49 +176,53 @@ class MovieInfoViewModel(application: Application) : AndroidViewModel(applicatio
         REPO = MovieRepoImpl(AppDatabase.getInstance(context).movieDao())
     }
 
-    fun getAllCollections(): LiveData<List<MovieDBModel>> {
-        return REPO.getAllCollections()
-    }
-
-    private fun getAllMovie(): LiveData<List<com.example.test_kinopoisk.ui.database.model.FilmInfo>> {
+    private fun getAllMovies(): LiveData<List<MovieDBModel>> {
         return REPO.getAllMovies()
     }
 
-
     fun insertMovie(
-        imageView:ImageView,
+        imageView: ImageView,
         onSuccess: () -> Unit
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            listFilmInfo.collect { filmInfo ->
-                if (getAllMovie().value?.any { it.movieId != filmInfo[0].kinopoiskId } == false) {
-                    val drawable = ContextCompat.getDrawable(context, R.drawable.ic_like)
-                    imageView.setImageDrawable(drawable)
-                    REPO.insertMovie(
-                        com.example.test_kinopoisk.ui.database.model.FilmInfo(
-                            movieId = filmInfo[0].kinopoiskId,
-                            nameRu = filmInfo[0].nameRu,
-                            nameEn = filmInfo[0].nameEn,
-                            posterUrl = filmInfo[0].posterUrl
-                        )
-                    ) {
-                        onSuccess()
-                    }
-                } else {
-                    val drawable = ContextCompat.getDrawable(context, R.drawable.ic_like_border)
-                    imageView.setImageDrawable(drawable)
-                    REPO.deleteMovie(
-                        com.example.test_kinopoisk.ui.database.model.FilmInfo(
-                            movieId = filmInfo[0].kinopoiskId,
-                            nameRu = filmInfo[0].nameRu,
-                            nameEn = filmInfo[0].nameEn,
-                            posterUrl = filmInfo[0].posterUrl
-                        )
-                    ) {
-                        onSuccess()
+            isLoading.collect { loading ->
+                if (loading) {
+                    listFilmInfo.collect { filmInfo ->
+                            if (getAllMovies().value?.any { it.filmInfo.movieId != filmInfo[0].kinopoiskId } == false) {
+                                val drawable =
+                                    ContextCompat.getDrawable(context, R.drawable.ic_like)
+                                imageView.setImageDrawable(drawable)
+                                filmInfoDB.value[0].movieId = filmInfo[0].kinopoiskId
+                                filmInfoDB.value[0].nameRu = filmInfo[0].nameRu
+                                filmInfoDB.value[0].nameEn = filmInfo[0].nameEn
+                                filmInfoDB.value[0].posterUrl = filmInfo[0].posterUrl
+                                REPO.insertMovie(
+                                    MovieDBModel(
+                                        titleCollection = "like",
+                                        filmInfo = filmInfoDB.value[0]
+                                    )
+                                ) {
+                                    onSuccess()
+                                }
+                            } else {
+                                val drawable =
+                                    ContextCompat.getDrawable(context, R.drawable.ic_like_border)
+                                imageView.setImageDrawable(drawable)
+                                filmInfoDB.value[0].movieId = filmInfo[0].kinopoiskId
+                                filmInfoDB.value[0].nameRu = filmInfo[0].nameRu
+                                filmInfoDB.value[0].nameEn = filmInfo[0].nameEn
+                                filmInfoDB.value[0].posterUrl = filmInfo[0].posterUrl
+                                REPO.deleteMovie(
+                                    MovieDBModel(
+                                        titleCollection = "like",
+                                        filmInfo = filmInfoDB.value[0]
+                                    )
+                                ) {
+                                    onSuccess()
+                                }
+                            }
                     }
                 }
-
             }
         }
     }
